@@ -691,7 +691,7 @@ True
 
 # Les opérateurs
 
-## Les opér:Dateurs mathématiques
+## Les opérateurs mathématiques
 
 | Opération     | Définition     |
 | :------------- | :------------- |
@@ -703,6 +703,26 @@ True
 | `a % b`       | Division, renvoie le reste       |
 | `a ** b` ou `pow(a, b)`       | a puissance b     |
 | `-a`       | a multiplié par -1     |
+
+---
+# Les opérateurs
+
+## Les opérateurs mathématiques - Notations courtes
+
+Il existe une notation plus courte pour les opérations.
+Si on ajoute `=` après l'opérateur on applique l'opération à la variable à gauche de l'opérateur (`a += 2`).
+
+Notation longue:
+````python3
+a = a * 2
+b = b + a
+````
+
+Notation courte:
+````python3
+a *= 2 # Multiplie directement a par 2
+b += a # Ajoute directement a à b
+````
 
 ---
 
@@ -772,6 +792,186 @@ Instructions:
 - Ouvrez le dans un éditeur de texte et lisez les consignes.
 
 Temps estimé: 7 minutes
+
+---
+
+# Les conditions
+
+## La structure conditionnelle - if
+
+Parfois dans un programme, il est nécessaire d'éxecutez une partie du code si et seulement si un cas est rencontré.
+
+On a alors besoin des conditions définis par la déclaration `if` (on parle aussi de *if statement*).
+
+Une condition doit être associé à une expression renvoyant un booléen (comparaison, prédicat...).
+
+---
+
+# Les conditions
+
+## La structure conditionnelle - if (2)
+
+Si une condition est vrai (True), python éxecute le bloc sous le if, puis revient au reste du programme:
+````python3
+a = 4
+
+if (a <= 4) and (a > 0):
+    print("La condition est vrai !") # On passe ici
+# Saut de ligne obligatoire !!!
+print("Les conditions ont été vérifiées !")
+````
+
+````
+La condition est vrai !
+Les condition ont été vérifiées !
+````
+
+---
+
+# Les conditions
+
+## La structure conditionnelle - if (3)
+
+Si une condition est fausse (False), python ignore le bloc sous le if:
+````python3
+a = 6
+
+if (a <= 4) and (a > 0):
+    print("La condition est fausse !") # On ne passe pas
+
+print("Les conditions ont été vérifiées !")
+````
+
+````
+Les condition ont été vérifiées !
+````
+---
+
+# Les conditions
+
+## La structure conditionnelle - else
+
+Si une condition est fausse (False), on peut vouloir éxecuter un bout de code spécifique. Pour se faire on chaîne le `if` avec un `else`.
+
+````python3
+car_color = "yellow"
+car_is_yellow = car_color == "yellow"
+
+if not car_is_not_yellow:
+    car_price = 10000 # On ne passe pas
+else:
+    car_price = 8000  # On passe
+
+print("Car price: ", car_price)
+````
+
+````
+Car price: 8000
+````
+
+---
+
+
+# Les conditions
+
+## La structure conditionnelle - else (2)
+
+Parfois, on a tendance à faire des conditions inutiles:
+````python3
+car_color = "yellow"
+
+if car_color == "yellow":
+    car_is_yellow = True
+else:
+    car_is_yellow = False
+````
+
+Alors que vous pouvez stocker le résultat d'une comparaison:
+
+````
+car_is_yellow = car_color == "yellow"
+````
+
+C'est idiot mais on le retrouve souvent...
+
+---
+
+## La structure conditionnelle - if imbriqués
+
+Certains cas requierent d'imbriquer les conditions:
+````python3
+car_color = "yellow"
+car_carburant = "gazoil"
+
+if car_color != "yellow": # On ne passe pas
+    if car_carburant == "gazoil":
+        car_price = 10000
+    else:
+        car_price = 9000
+else: # On passe
+    if car_carburant == "gazoil":
+        car_price = 8000  # On passe
+    else:
+        car_price = 7000 # On ne passe pas
+````
+
+````
+Car price: 7000
+````
+
+---
+# Les conditions
+
+## La structure conditionnelle - elif
+
+Parfois imbriquer les conditions complique le code. Pour faciliter la lecture on peut enchaîner le `if` avec un `elif`:
+````python3
+if not car_is_yellow and car_uses_gazoil:
+    car_price = 10000 # On ne passe pas
+elif not car_is_yellow and not car_uses_gazoil:
+    car_price = 9000  # On ne passe pas
+elif car_is_yellow and car_uses_gazoil:
+    car_price = 8000 # On passe
+else:
+    car_price = 7000 # On ne passe pas
+````
+
+Celà revient à enchaîner plusieurs `if` avec une écriture plus compact.
+
+---
+# Les conditions
+
+## Les expressions conditionnelles
+
+Il est aussi possible d'écrire une expression contenant une condition (simple) pour avoir un code compact.
+
+
+Avec une déclaration (statement):
+````python3
+if car_is_yellow: # If statement
+    car_price = 8000
+else:
+    car_price = 10000
+````
+
+Avec une expression:
+````python3
+# If expression
+car_price = 8000 if car_is_yellow else 10000
+print(8000 if car_is_yellow else 10000)
+````
+
+---
+
+
+###### Exercice 04: Comparaisons et conditions
+
+Instructions:
+- Rendez vous sur github: https://git.io/vFj7w
+- Récupérez le fichier comparisons_conditions.py
+- Ouvrez le dans un éditeur de texte et lisez les consignes.
+
+Temps estimé: 10minutes
 
 ---
 
