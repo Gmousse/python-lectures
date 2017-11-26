@@ -148,7 +148,7 @@ Un et un font 2 !
 
 ## Les lignes d'instructions
 
-Normalement on déclare une instruction par ligne:
+Normalement on déclare une instruction (statement) par ligne:
 
 ````python3
 a + 4
@@ -167,7 +167,7 @@ a + 4;a + 8
 
 ## Les lignes d'instructions (2)
 
-Ecrire une expression sur plusieurs lignes est prohibé:
+Ecrire une instruction (statement) sur plusieurs lignes est prohibé:
 ````python3
 a + 
 4
@@ -189,7 +189,7 @@ SyntaxError: invalid syntax
 
 ## Les lignes d'instructions (3)
 
-Pour des besoins de lisibilité on peut expliciter la continuation de la ligne:
+Pour des besoins de lisibilité on peut expliciter la continuation de la ligne via `\`:
 ````python3
 1 + 4 + 5 + 7 + 8 + 9 + 10 + 545784 + 6 + 9 +\
 4 + 1 + 3\
@@ -277,7 +277,6 @@ Résultats attendus:
 
 ---
 
-
 # Introduction 
 
 ###### Exercice 02: Votre première programme
@@ -293,11 +292,188 @@ Résultats attendus:
 
 # Les variables 
 
+## Déclarer une variable (1)
+
+En python, la gestion des *objets* en mémoire et leur typage est dynamique.
+
+Chaque valeur que vous allez utilisé se voit attribué un type et un id (localisation dans la mémoire):
+
+````python3
+print(128, id(128), type(128))
+````
+
+````
+128 139810890631904 <class 'int'>
+````
+
+---
+
+
+# Les variables 
+
+## Déclarer une variable (2)
+
+On peut affecter une valeur (e.g. 128) à un nom pour le manipuler à long terme:
+
+````python3
+x = 128
+print(128, id(128), type(128))
+print(x, id(x), type(x))
+````
+
+````
+128 139810890631904 <class 'int'>
+128 139810890631904 <class 'int'>
+````
+
+On vient alors de *déclarer la variable* x.
+
+---
+
+# Les variables 
+
+## Déclarer une variable (3)
+
+Affecter une valeur à une variable consiste à lui donner un alias.
+On conserve l'id et le type de la valeur ainsi affectée.
+
+On peut aussi affecter une variable à une autre variable:
+````python3
+x = 128
+y = x    # équivalent de x = y = 128
+print(x, y, id(x), id(y))
+````
+
+````
+128 128 139810890631904 139810890631904
+````
+
+y possèdera alors l'identité de x.
+
+---
+
+# Les variables 
+
+## Déclarer une variable (4)
+
+On peut aussi déclarer plusieurs variables en même temps:
+
+````python3
+a, b = 35, 24
+print(a, b)
+````
+
+````
+35 24
+````
+
+---
+
+
+# Les variables 
+
+## Modifier une variable
+
+Une variable peut varier dans le temps (!= constante).
+
+On peut réattribuer la valeur assignée:
+
+````python3
+x = x + 10 # équivalent de x += 10
+print(x, y, id(x), id(y))
+````
+
+````
+138 128 139810890632224 139810890631904
+````
+
+La valeur de x change, son id aussi. 
+
+y ne change pas car il ne partage plus le même id avec x. 
+
+---
+
+
+# Les variables 
+
+## Modifier une variable (2)
+
+**Attention!** Lorsque l'on travaille sur un objet complexe et que l'on effectue un passage par référence, on va impacter une variable qui partage cette objet.
+
+````python
+a = {"clef": "valeur"}; b = a
+a["clef"] = "une autre valeur"
+print(a, b)
+print(id(a), id(b))
+````
+
+````
+{'clef': 'une autre valeur'} {'clef': 'une autre valeur'}
+139810876069496 139810876069496
+````
+
+Une modification par référence ne change pas l'id d'une valeur !!
+
+---
+
+
+# Les variables 
+
+## Modifier une variable (3)
+
+Il est souvent conseillé de ne pas écraser une variable mais d'en créer une nouvelle:
+
+````python3
+a = "Valeur"
+b = a + "!"
+````
+
+Celà permet une lecture (et donc une maintenabilité) facilité du code.
+
+---
+
+# Les variables 
+
+## Supprimer une variable
+
+Si une variable est inutile, on peut la supprimer (forcant ainsi python à la supprimer de la mémoire):
+
+````python3
+a = "Valeur"
+b = a
+del a # on a plus besoin de a
+print(b); print(a) 
+````
+
+Si on appelle la variable supprimée (on verra pourquoi plus tard):
+
+````
+Valeur # b n'est pas supprimé, on supprime juste a
+NameError: name 'a' is not defined
+````
+Il faut néanmoins utiliser la suppression avec prudence!
+
+---
+
+# Les variables 
+
+## Quid de la constante
+
+La constante est un nom donné à une valeur qui ne doit pas changer au cours du temps.
+
+On ne peut pas déclarer une *vrai* constante en python.
+
+Par convention on crée juste une variable avec le nom en majuscule:
+
+````python
+MA_SUPER_CONSTANTE = 35 # DO NOT TOUCH OR JUST DIE
+````
+
+Et surtout on y touche pas!
 
 ---
 
 # Les types primitifs
-
 
 ---
 
