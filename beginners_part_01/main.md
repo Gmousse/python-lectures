@@ -261,9 +261,6 @@ IndentationError: unexpected indent
 
 ---
 
-
-# Introduction
-
 ###### Exercice 01: Votre première commande en python
 Instructions:
 - Lancez le cli python.
@@ -274,10 +271,7 @@ Résultats attendus:
 - `Hello world !`
 - `4 3`
 
-
 ---
-
-# Introduction
 
 ###### Exercice 02: Votre première programme
 Instructions:
@@ -697,7 +691,7 @@ True
 
 # Les opérateurs
 
-## Les opérateurs mathématiques
+## Les opér:Dateurs mathématiques
 
 | Opération     | Définition     |
 | :------------- | :------------- |
@@ -742,7 +736,7 @@ Les booléens possèdent 3 opérateurs logiques permettant de vérifier des cond
 
 On les utilise couramment pour combiner plusieurs comparaisons:
 
-````python2
+````python
 if (a < 4) and (a > 0):
    print("a est entre 0 et 4 !")
 ````
@@ -766,6 +760,21 @@ Voici un résumé des possibilités avec les opérateurs logiques:
 | `not False`       | `True`      |
 
 ---
+
+
+###### Exercice 03: Variables, types et opérations
+
+A partir de maintenant on fera des exercices types TDD (test driven development).
+
+Instructions:
+- Rendez vous sur github: https://git.io/vFj7w
+- Récupérez le fichier variables_types_operators.py
+- Ouvrez le dans un éditeur de texte et lisez les consignes.
+
+Temps estimé: 7 minutes
+
+---
+
 
 # Introduction
 
@@ -796,21 +805,21 @@ Certains modules sont préinstallés avec python: https://docs.python.org/3/py-m
 ## Importer un module
 
 On peut importer un module dans son intégralité:
-````python3
+````python
 import math
 print(math.pi)
 ````
 
 Ou importer quelques parties du module:
 
-````python3
+````python
 from math import pi
 print(pi)
 ````
 
 Ou même tout importer d'un module:  **\/!\\**
 
-````python3
+````python
 from math import *
 print(pi)
 ````
@@ -823,7 +832,7 @@ print(pi)
 
 On peut aussi utiliser le système de modules pour découper son programme en plusieurs fichiers:
 
-````python3
+````python
 from .my_folder.my_file import my_function
 ````
 
@@ -873,7 +882,7 @@ Les built-ins par exemple sont présents par défaut dans le namespace.
 
 Pour visualiser un namespace, on utilise la fonction `dir` qui liste tout ce qui est dans le namespace local:
 
-````python3
+````python
 print(dir())
 ````
 
@@ -891,7 +900,7 @@ On peut même en voir le contenu: `print(dir(__builtins__))`
 
 Si on essaye d'accéder à une variable qui n'est pas présent dans le namespace local:
 
-````python3
+````python
 print(pi)
 ````
 
@@ -905,7 +914,7 @@ Python nous signal que le nom `pi` n'est pas présent dans le namespace local: `
 
 Lorsque l'on importe un module, ou que l'on déclare une variable, python l'ajoute alors au namespace:
 
-````python3
+````python
 from math import pi
 print(pi)
 print(dir())
