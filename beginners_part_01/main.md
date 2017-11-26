@@ -11,7 +11,7 @@
 
 ---
 
-# C'est qui le mec au tableau ? 
+# C'est qui le mec au tableau ?
 
 **Guillaume Mousnier**
 
@@ -23,7 +23,7 @@ Github: https://github.com/Gmousse
 
 Langages: Python, JavaScript, Scala, R
 
---- 
+---
 
 # Prérequis
 
@@ -58,7 +58,7 @@ Langages: Python, JavaScript, Scala, R
 
 # Introduction
 
-## Présentation du langage 
+## Présentation du langage
 
 Publié en 1991 par Guido van Rossum.
 
@@ -103,7 +103,7 @@ Lancer un programme avec python:
 ---
 
 
-# Introduction 
+# Introduction
 
 ## Les commentaires
 
@@ -122,7 +122,7 @@ On les utilisent pour ajouter des indications (doc) dans le code.
 ---
 
 
-# Introduction 
+# Introduction
 
 ## Afficher un résultat en python
 
@@ -144,7 +144,7 @@ Un et un font 2 !
 ---
 
 
-# Introduction 
+# Introduction
 
 ## Les lignes d'instructions
 
@@ -163,13 +163,13 @@ a + 4;a + 8
 
 ---
 
-# Introduction 
+# Introduction
 
 ## Les lignes d'instructions (2)
 
 Ecrire une instruction (statement) sur plusieurs lignes est prohibé:
 ````python3
-a + 
+a +
 4
 ````
 
@@ -177,7 +177,7 @@ En effet celà provoque une erreur de parsing:
 
 ````
   File "<stdin>", line 1
-    a + 
+    a +
        ^
 SyntaxError: invalid syntax
 ````
@@ -185,7 +185,7 @@ SyntaxError: invalid syntax
 ---
 
 
-# Introduction 
+# Introduction
 
 ## Les lignes d'instructions (3)
 
@@ -206,7 +206,7 @@ print(
 
 ---
 
-# Introduction 
+# Introduction
 
 ## Les indentations
 
@@ -232,7 +232,7 @@ IndentationError: unexpected indent
 
 ---
 
-# Introduction 
+# Introduction
 
 ## Les indentations (2)
 
@@ -262,7 +262,7 @@ IndentationError: unexpected indent
 ---
 
 
-# Introduction 
+# Introduction
 
 ###### Exercice 01: Votre première commande en python
 Instructions:
@@ -277,7 +277,7 @@ Résultats attendus:
 
 ---
 
-# Introduction 
+# Introduction
 
 ###### Exercice 02: Votre première programme
 Instructions:
@@ -290,7 +290,7 @@ Résultats attendus:
 
 ---
 
-# Les variables 
+# Les variables
 
 ## Déclarer une variable (1)
 
@@ -309,7 +309,7 @@ print(128, id(128), type(128))
 ---
 
 
-# Les variables 
+# Les variables
 
 ## Déclarer une variable (2)
 
@@ -330,7 +330,7 @@ On vient alors de *déclarer la variable* x.
 
 ---
 
-# Les variables 
+# Les variables
 
 ## Déclarer une variable (3)
 
@@ -352,7 +352,7 @@ y possèdera alors l'identité de x.
 
 ---
 
-# Les variables 
+# Les variables
 
 ## Déclarer une variable (4)
 
@@ -370,7 +370,7 @@ print(a, b)
 ---
 
 
-# Les variables 
+# Les variables
 
 ## Modifier une variable
 
@@ -387,14 +387,14 @@ print(x, y, id(x), id(y))
 138 128 139810890632224 139810890631904
 ````
 
-La valeur de x change, son id aussi. 
+La valeur de x change, son id aussi.
 
-y ne change pas car il ne partage plus le même id avec x. 
+y ne change pas car il ne partage plus le même id avec x.
 
 ---
 
 
-# Les variables 
+# Les variables
 
 ## Modifier une variable (2)
 
@@ -417,7 +417,7 @@ Une modification par référence ne change pas l'id d'une valeur !!
 ---
 
 
-# Les variables 
+# Les variables
 
 ## Modifier une variable (3)
 
@@ -432,7 +432,7 @@ Celà permet une lecture (et donc une maintenabilité) facilité du code.
 
 ---
 
-# Les variables 
+# Les variables
 
 ## Supprimer une variable
 
@@ -442,7 +442,7 @@ Si une variable est inutile, on peut la supprimer (forcant ainsi python à la su
 a = "Valeur"
 b = a
 del a # on a plus besoin de a
-print(b); print(a) 
+print(b); print(a)
 ````
 
 Si on appelle la variable supprimée (on verra pourquoi plus tard):
@@ -455,7 +455,7 @@ Il faut néanmoins utiliser la suppression avec prudence!
 
 ---
 
-# Les variables 
+# Les variables
 
 ## Quid de la constante
 
@@ -473,9 +473,228 @@ Et surtout on y touche pas!
 
 ---
 
-# Les types primitifs
+# Les variables
+
+## Conventions de nommage
+
+Quand on crée une variable (mais aussi une classe ou une fonction), il convient de lui donner un nom clair.
+
+Il est conseillé d'utiliser 1 convention parmis:
+- CamelCase: `maSuperVariable = 3`
+- SnakeCase: `ma_super_variable = 3`
+
+Il faut en choisir une et s'y tenir.
+
+Les caractères autorisés pour le nommage sont: `a...z`, `A...z`, `0...9`, `_`.
 
 ---
+
+# Les variables
+
+## Conventions de nommage (2)
+
+**\/!\\** Ne pas lui donner le nom d'un builtins ou d'un module:
+
+````python
+print = "coucou"
+print(12)
+````
+
+````
+TypeError: 'str' object is not callable
+````
+
+Ou le nom d'un mot clef réservé:
+````python
+if = "coucou"
+````
+````
+SyntaxError: invalid syntax
+````
+
+---
+
+# Les types primitifs
+
+## Liste des types primitifs
+
+Python possède quelques types *primitifs*:
+- `bool`: Boolean: 2 valeurs logiques `True` (1) ou `False` (0)
+- `int`: Integer: nombre entier (`123`).
+- `float`: Float: nombre à virgule (`3.14159`).
+- `str`: String: chaîne de charactères, texte (`":D"` ou `':D'`).
+- `None`: None ou null: valeur manquante ou nulle.
+
+Détails: https://docs.python.org/3/library/stdtypes.html
+
+---
+
+# Les types primitifs
+
+## Vérifier un type
+
+La fonction `type` donne le type d'une valeur:
+````python
+a = "coucou"
+print(type(a))
+````
+````
+<class 'str'>
+````
+
+La fonction `isinstance` vérifie qu'une variable est une *instance* d'un type (et donc d'une classe):
+````python
+print(isinstance(a, str), isinstance(a, int))
+````
+````
+True False
+````
+---
+
+# Les types primitifs
+
+## Déclarer un type
+
+Python définit les types de manière dynamique.
+
+On peut néanmoins expliciter un type dans le cadre d'un changement de typage:
+````python
+a = "123"
+b = int(a)
+print(type(a), type(b))
+````
+
+````
+<class 'str'> <class 'int'>
+````
+
+**\/!\\** Cette conversion n'est pas toujours simple !
+
+---
+
+# Les types primitifs
+
+## Le booléen
+
+Le [`bool`](https://docs.python.org/3/library/stdtypes.html#truth-value-testing) est un type logique simple qui peut prendre uniquement 2 valeurs: True ou False.
+
+On l'utilise pour statuer que quelquechose est vrai ou faux:
+````python
+print(1 > 2, 3 == 3, True == False, bool(0), bool(1))
+````
+
+````
+False, True, False, False, True
+````
+
+Il est retourné par les comparaisons, et on l'utilise pour valider des conditions (if).
+
+---
+
+# Les types primitifs
+
+## Les nombres
+
+On utilise [`int`](https://docs.python.org/3/library/stdtypes.html#numeric-types-int-float-complex) pour les nombres entiers. [`float`](https://docs.python.org/3/library/stdtypes.html#numeric-types-int-float-complex)pour les nombres à virgule:
+````python
+print(128, 3.14)
+print(type(128), type(3.14))
+print(float(128), int(3.14))
+````
+
+````
+128 3.14
+<class 'int'> <class 'float'>
+128.0 3
+````
+
+PS: Il existe aussi un type `complex` que nous n'aborderons pas.
+PS2: Il existait en python2 un type `long` qui a été unifié avec `int`.
+
+---
+
+# Les types primitifs
+
+## Les chaîne de caractères
+
+On utilise [`str`](https://docs.python.org/3/library/stdtypes.html#str) pour le texte (ou chaîne de caractères).
+
+On peut déclarer une string via des `"`, `'`, `"""` ou `'''`:
+````python
+print("hello world", 'hello world')
+print("""   
+    hello
+    world
+""") # Les triple quotes permettent le multiline
+````
+
+````
+hello world hello world
+	hello
+	world
+````
+
+La classe str a de nombreuses méthodes...
+
+---
+
+# Les types primitifs
+
+## Les chaîne de caractères - Méthodes (1)
+
+
+Concatenez du texte:
+- `"un" + " " + "mot"` -> `"un mot"`
+- `"{} mot{}".format(1 + 3, "s")` -> `"3 mots"`
+
+Formatez du texte:
+- `"un mot".capitalize()` -> `"Un mot"`
+- `"UN mot".lower()` -> `"un mot"`
+- `"un mot".upper()` -> `"UN MOT`
+- `"uN MOT".swapcase()` -> `"Un mot"`
+- `"    Un mot ".strip()` -> `"Un mot"`
+
+---
+
+# Les types primitifs
+
+## Les chaîne de caractères - Méthodes (2)
+
+
+Remplacez dans du texte:
+- `"un mot".replace("mot", "chat")` -> `"un chat"`
+
+
+Cherchez dans du texte:
+- `"mot" in "un mot"` -> `True`
+- `"un mot".startswith("un")` -> `True`
+- `"un mot".endswith("un")` -> `True`
+
+Séparez du texte en plusieurs textes:
+- `"un mot".replace(" ")` -> `["un", "mot"]`
+
+
+---
+
+# Les types primitifs
+
+## La valeur nulle ou None (Null)
+
+Lorsque l'on veut signifier qu'une variable n'a pas de valeur on utilise l'objet [`None`](https://docs.python.org/3/library/stdtypes.html#the-null-object):
+
+````python
+a = None # a n'a pas de valeur
+print(a, type(a))
+print(a is None)
+````
+
+````
+None <class 'NoneType'>
+True
+````
+
+---
+
 
 # Les opérateurs
 
@@ -492,19 +711,19 @@ Et surtout on y touche pas!
 ---
 
 
-# Introduction 
+# Introduction
 
-## Les fonctions built-in 
+## Les fonctions built-in
 
 De nombreuses fonctions ou types sont disponibles par défaut dans le namespace (ou scope) de python, ce sont les **built-in functions**.
 
 Par exemple, la fonction `print` est une fonction built-in.
 
-La liste non exhaustive des built-in functions est disponible ici: https://docs.python.org/3/library/functions.html 
+La liste non exhaustive des built-in functions est disponible ici: https://docs.python.org/3/library/functions.html
 
 ---
 
-# Introduction 
+# Introduction
 
 ## Les modules
 
@@ -614,7 +833,7 @@ On peut même en voir le contenu: `print(dir(__builtins__))`
 
 ## Comprendre les namespaces (3)
 
-Si on essaye d'accéder à une variable qui n'est pas présent dans le namespace local: 
+Si on essaye d'accéder à une variable qui n'est pas présent dans le namespace local:
 
 ````python3
 print(pi)
