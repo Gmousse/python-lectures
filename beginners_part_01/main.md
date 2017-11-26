@@ -695,11 +695,20 @@ True
 
 ---
 
-
 # Les opérateurs
 
 ## Les opérateurs mathématiques
 
+| Opération     | Définition     |
+| :------------- | :------------- |
+| `a + b`       | Somme de a et de b       |
+| `a - b`       | Différence de a et de b       |
+| `a * b`       | Multiplication de a par b      |
+| `a / b`       | Division de a par b       |
+| `a // b`       | Division, renvoie l'entier       |
+| `a % b`       | Division, renvoie le reste       |
+| `a ** b` ou `pow(a, b)`       | a puissance b     |
+| `-a`       | a multiplié par -1     |
 
 ---
 
@@ -707,9 +716,56 @@ True
 
 ## Les opérateurs de comparaisons
 
+| Opération     | Définition     |
+| :------------- | :------------- |
+| `a < b`       | a est inférieur à b       |
+| `a <= b`       | a est inférieur ou égal à b       |
+| `a > b`       | a est supérieur à b       |
+| `a >= b`       | a est supérieur ou égal à b       |
+| `a == b`       | a est égal à b       |
+| `a != b`       | a n'est pas égal à b       |
+| `a is b`       | a est identique à b       |
+| `a is not b`       | a n'est pas identique à b       |
 
 ---
 
+# Les opérateurs
+
+## Les opérateurs logiques
+Les booléens possèdent 3 opérateurs logiques permettant de vérifier des conditions complexes:
+
+| Opération     | Définition     |
+| :------------- | :------------- |
+| `a or b`       | Se vérifie si l'un est vrai   |
+| `a and b`       | Se vérifie si les deux sont vrais  |
+| `not a`       | Donne l'inverse de a  |
+
+On les utilise couramment pour combiner plusieurs comparaisons:
+
+````python2
+if (a < 4) and (a > 0):
+   print("a est entre 0 et 4 !")
+````
+
+---
+
+# Les opérateurs
+
+## Les opérateurs logiques (2)
+
+Voici un résumé des possibilités avec les opérateurs logiques:
+
+| Opération     | Résultat     |
+| :------------- | :------------- |
+| `True or True`       | `True`   |
+| `True or False` ou `False or True`       |  `True`  |
+| `False or False`       |  `False`  |
+| `True and True`       | `True`  |
+| `True and False` ou `False and True`       | `False`  |
+| `not True`       | `False`      |
+| `not False`       | `True`      |
+
+---
 
 # Introduction
 
