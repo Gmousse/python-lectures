@@ -92,12 +92,12 @@ Favorise le EAFP (*it's easier to ask for forgiveness than permission*) plutôt 
 
 Lancer le cli (command-line interface) de python:
 
-`python3`
+`python`
 
 Lancer un programme avec python:
 
-`python3 /mon_chemin/mon_programme.py`
-`python3 -m mon_module`
+`python /mon_chemin/mon_programme.py`
+`python -m mon_module`
 
 
 ---
@@ -109,7 +109,7 @@ Lancer un programme avec python:
 
 En python on peut définir un commentaire (texte qui ne sera pas interprété dans votre programme) avec `#`:
 
-````python3
+````python
 # Ceci est un commentaire
 "Ceci n'est pas un commentaire"
 
@@ -130,16 +130,41 @@ La fonction `print` permet d'afficher un ou plusieurs résultats dans la console
 
 Ainsi:
 
-````python3
+````python
 print("Test")
 print("Un et un font ", 1 + 1, "!")
 ````
 
 Affichera dans la console (ou la sortie standard):
-````python3
+````python
 Test
 Un et un font 2 !
 ````
+
+---
+
+# Introduction
+
+## Documentation
+
+En mode console, il est possible d'obtenir la documentation d'une fonction, classe ou autres via la fonction `help`:
+
+````python
+help(print)
+````
+
+````
+print(...)
+    print(value, ..., sep=' ', end='\n', file=sys.stdout, flush=False)
+    Prints the values to a stream, or to sys.stdout by default.
+    Optional keyword arguments:
+    file:  a file-like object (stream); defaults to the current sys.stdout.
+    sep:   string inserted between values, default a space.
+    end:   string appended after the last value, default a newline.
+    flush: whether to forcibly flush the stream.
+````
+
+Sinon, il y a la doc python: https://docs.python.org/3/
 
 ---
 
@@ -150,14 +175,14 @@ Un et un font 2 !
 
 Normalement on déclare une instruction (statement) par ligne:
 
-````python3
+````python
 a + 4
 a + 8
 ````
 
 Il est possible mais non conseillé d'en déclarer plusieurs:
 
-````python3
+````python
 a + 4;a + 8
 ````
 
@@ -168,7 +193,7 @@ a + 4;a + 8
 ## Les lignes d'instructions (2)
 
 Ecrire une instruction (statement) sur plusieurs lignes est prohibé:
-````python3
+````python
 a +
 4
 ````
@@ -190,7 +215,7 @@ SyntaxError: invalid syntax
 ## Les lignes d'instructions (3)
 
 Pour des besoins de lisibilité on peut expliciter la continuation de la ligne via `\`:
-````python3
+````python
 1 + 4 + 5 + 7 + 8 + 9 + 10 + 545784 + 6 + 9 +\
 4 + 1 + 3\
 + 2
@@ -212,7 +237,7 @@ print(
 
 Python utilise l'indentation pour séparer les blocs d'instructions d'un programme:
 
-````python3
+````python
 a = 1
 
 if a != 1:
@@ -224,9 +249,6 @@ print(a)
 Il convient d'être rigoureux:
 
 ````
-  File "<stdin>", line 1
-    a + 8
-    ^
 IndentationError: unexpected indent
 ````
 
@@ -238,7 +260,7 @@ IndentationError: unexpected indent
 
 La taille de l'indentation importe peu:
 
-````python3
+````python
 if a == 1:
            print("OUF")
 ````
@@ -246,7 +268,7 @@ if a == 1:
 
 Mais il faut être constant et rigoureux:
 
-````python3
+````python
 if a == 1:
     print("OUF")
            print("THAT WAS EXPECTED")
@@ -292,7 +314,7 @@ En python, la gestion des *objets* en mémoire et leur typage est dynamique.
 
 Chaque valeur que vous allez utilisé se voit attribué un type et un id (localisation dans la mémoire):
 
-````python3
+````python
 print(128, id(128), type(128))
 ````
 
@@ -309,7 +331,7 @@ print(128, id(128), type(128))
 
 On peut affecter une valeur (e.g. 128) à un nom pour le manipuler à long terme:
 
-````python3
+````python
 x = 128
 print(128, id(128), type(128))
 print(x, id(x), type(x))
@@ -332,7 +354,7 @@ Affecter une valeur à une variable consiste à lui donner un alias.
 On conserve l'id et le type de la valeur ainsi affectée.
 
 On peut aussi affecter une variable à une autre variable:
-````python3
+````python
 x = 128
 y = x    # équivalent de x = y = 128
 print(x, y, id(x), id(y))
@@ -352,7 +374,7 @@ y possèdera alors l'identité de x.
 
 On peut aussi déclarer plusieurs variables en même temps:
 
-````python3
+````python
 a, b = 35, 24
 print(a, b)
 ````
@@ -372,7 +394,7 @@ Une variable peut varier dans le temps (!= constante).
 
 On peut réattribuer la valeur assignée:
 
-````python3
+````python
 x = x + 10 # équivalent de x += 10
 print(x, y, id(x), id(y))
 ````
@@ -417,7 +439,7 @@ Une modification par référence ne change pas l'id d'une valeur !!
 
 Il est souvent conseillé de ne pas écraser une variable mais d'en créer une nouvelle:
 
-````python3
+````python
 a = "Valeur"
 b = a + "!"
 ````
@@ -432,7 +454,7 @@ Celà permet une lecture (et donc une maintenabilité) facilité du code.
 
 Si une variable est inutile, on peut la supprimer (forcant ainsi python à la supprimer de la mémoire):
 
-````python3
+````python
 a = "Valeur"
 b = a
 del a # on a plus besoin de a
@@ -713,13 +735,13 @@ Il existe une notation plus courte pour les opérations.
 Si on ajoute `=` après l'opérateur on applique l'opération à la variable à gauche de l'opérateur (`a += 2`).
 
 Notation longue:
-````python3
+````python
 a = a * 2
 b = b + a
 ````
 
 Notation courte:
-````python3
+````python
 a *= 2 # Multiplie directement a par 2
 b += a # Ajoute directement a à b
 ````
@@ -758,7 +780,7 @@ On les utilise couramment pour combiner plusieurs comparaisons:
 
 ````python
 if (a < 4) and (a > 0):
-   print("a est entre 0 et 4 !")
+    print("a est entre 0 et 4 !")
 ````
 
 ---
@@ -812,7 +834,7 @@ Une condition doit être associé à une expression renvoyant un booléen (compa
 ## La structure conditionnelle - if (2)
 
 Si une condition est vrai (True), python éxecute le bloc sous le if, puis revient au reste du programme:
-````python3
+````python
 a = 4
 
 if (a <= 4) and (a > 0):
@@ -833,7 +855,7 @@ Les condition ont été vérifiées !
 ## La structure conditionnelle - if (3)
 
 Si une condition est fausse (False), python ignore le bloc sous le if:
-````python3
+````python
 a = 6
 
 if (a <= 4) and (a > 0):
@@ -853,7 +875,7 @@ Les condition ont été vérifiées !
 
 Si une condition est fausse (False), on peut vouloir éxecuter un bout de code spécifique. Pour se faire on chaîne le `if` avec un `else`.
 
-````python3
+````python
 car_color = "yellow"
 car_is_yellow = car_color == "yellow"
 
@@ -877,7 +899,7 @@ Car price: 8000
 ## La structure conditionnelle - else (2)
 
 Parfois, on a tendance à faire des conditions inutiles:
-````python3
+````python
 car_color = "yellow"
 
 if car_color == "yellow":
@@ -899,7 +921,7 @@ C'est idiot mais on le retrouve souvent...
 ## La structure conditionnelle - if imbriqués
 
 Certains cas requierent d'imbriquer les conditions:
-````python3
+````python
 car_color = "yellow"
 car_carburant = "gazoil"
 
@@ -925,7 +947,7 @@ Car price: 7000
 ## La structure conditionnelle - elif
 
 Parfois imbriquer les conditions complique le code. Pour faciliter la lecture on peut enchaîner le `if` avec un `elif`:
-````python3
+````python
 if not car_is_yellow and car_uses_gazoil:
     car_price = 10000 # On ne passe pas
 elif not car_is_yellow and not car_uses_gazoil:
@@ -947,7 +969,7 @@ Il est aussi possible d'écrire une expression contenant une condition (simple) 
 
 
 Avec une déclaration (statement):
-````python3
+````python
 if car_is_yellow: # If statement
     car_price = 8000
 else:
@@ -955,7 +977,7 @@ else:
 ````
 
 Avec une expression:
-````python3
+````python
 # If expression
 car_price = 8000 if car_is_yellow else 10000
 print(8000 if car_is_yellow else 10000)
@@ -975,6 +997,91 @@ Temps estimé: 10minutes
 
 ---
 
+# Les structures de données
+
+## La liste
+
+L'objet [`list`](https://docs.python.org/3/tutorial/datastructures.html#more-on-lists) est une structure permettant de stocker une suite d'éléments de tout types.
+
+Elle est relativement simple à créer:
+
+````python
+liste_vide = []
+liste_vide = list()
+liste_nombres = [1, 2, 3, 4, 5, 6, 875484]
+liste_noms = ["jean michel", "jean simon", "jean marc",
+              "jean charles", "jean jean"]
+````
+
+---
+
+# Les structures de données
+
+## La liste (2)
+
+C'est une structure simple, qui a un ordre et une longueur.
+
+La fonction `len` retourne le nombre d'élements dans la liste:
+
+````python
+liste_noms = ["jean michel", "jean simon", "jean marc",
+              "jean charles", "jean jean"]
+print(liste_noms, type(liste_noms), len(liste_noms))
+````
+
+````
+["jean michel", "jean simon", "jean marc",
+              "jean charles", "jean jean"]
+<class 'list'> 5
+````
+
+---
+
+## La liste - Indexation
+
+Chaque élément d'une liste a un index (position dans la liste). L'index commence à 0.
+
+On peut alors récupérer un élement par son index:
+
+````python
+print(liste_noms[0]) # Le premier élément
+print(liste_noms[1]) # Le deuxième élément
+print(liste_noms[-1]) # Le dernier élément,liste_noms[4]
+````
+
+````
+jean michel
+jean simon
+jean jean
+````
+
+---
+
+## La liste - Indexation (2)
+
+On peut également sélectionné une partie de la liste (slice) en précisant un début (inclusif) et une fin (exclusif):
+
+````python
+liste_noms = ["jean michel", "jean simon", "jean marc",
+              "jean charles", "jean jean"]
+print(liste_noms[1:4]) # 2ème à l'avant dernier (4ème)
+print(liste_noms[:-1]) # tout sauf le dernier
+print(liste_noms[1:]) # tout sauf le premier
+print(liste_noms[::2]) # tout de 2 en 2
+print(liste_noms[1:-1:2]) # 1er au 4ème de 2 en 2
+print(liste_noms[::-1]) # tout en partant de la fin
+````
+
+````
+["jean simon", "jean marc", "jean charles"]
+["jean michel", "jean simon", "jean marc", "jean charles"]
+["jean simon", "jean marc", "jean charles", "jean jean"]
+["jean michel", "jean marc", "jean jean"]
+["jean simon", "jean charles"]
+["jean jean", "jean charles", "jean marc", "jean simon", "jean michel"]
+````
+
+---
 
 # Introduction
 

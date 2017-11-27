@@ -63,7 +63,7 @@ class Test_comparisons_conditions(unittest.TestCase):
         on verra comment refaire ce code proprement.
 
         Différents scénarios vont être testé dans cet exercice !
-        Votre code, sans que vous le voyez est englobez dans une fonction (2 chapitres plus tard).
+        Votre code est englobé dans une fonction (2 chapitres plus tard).
         Veillez donc à respecter l'indentation.
         """
 
@@ -71,6 +71,7 @@ class Test_comparisons_conditions(unittest.TestCase):
                                    car_is_tinted, client_is_club_member):
 
             # CODE HERE
+
             # STOP HERE
             print("Car options: ",
                   "Price:", car_base_price,

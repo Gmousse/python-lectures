@@ -55,7 +55,7 @@ class Test_variables_types_operators(unittest.TestCase):
 
     def test_pretty_email(self):
         """
-        Un de vos client vous fais parvenir une liste de modification à appliquer au texte d'un email automatique.
+        Un de vos client vous fais parvenir une liste de modifications à appliquer au texte d'un email automatique.
         Vous devez donc modifiez le contenu de cet email.
         Vu que vous êtes féneant vous le faites en python.
 
