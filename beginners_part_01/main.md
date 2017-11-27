@@ -1083,6 +1083,47 @@ print(liste_noms[::-1]) # tout en partant de la fin
 
 ---
 
+## La liste - Complétion
+
+On peut ajouter des élements dans une liste après sa création:
+````python
+liste_noms.append("jean jacques") # ajout à la fin
+print(liste_noms[-1])
+liste_noms.insert(2, "jean robert") 
+print(liste_noms[:4]) # ajout à la position 2
+liste_noms = liste_noms + ["jean charles", "jean claude"]
+# idem: list_noms.extend(["jean charles", "jean claude"])
+print(liste_noms[5:]) # concaténation
+````
+
+````
+jean jacques
+['jean michel', 'jean simon', 'jean robert', 'jean marc']
+['jean jean', 'jean jacques', 'jean charles', 'jean claude']
+````
+
+---
+
+
+## La liste - Suppression
+
+On peut supprimer des éléments dans une liste:
+````python
+print(liste_noms[-1])
+del liste_noms[-1] # supprime l'élement dans l'index -1
+print(liste_noms[-1])
+liste_noms.remove("jean charles")
+print(liste_noms[-1])
+````
+
+````
+jean claudes
+jean charles
+jean jacques
+````
+
+---
+
 # Introduction
 
 ## Les fonctions built-in
