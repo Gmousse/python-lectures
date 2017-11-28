@@ -201,9 +201,6 @@ a +
 En effet celà provoque une erreur de parsing:
 
 ````
-  File "<stdin>", line 1
-    a +
-       ^
 SyntaxError: invalid syntax
 ````
 
@@ -275,9 +272,6 @@ if a == 1:
 ````
 
 ````
-  File "<stdin>", line 3
-    print("THAT WAS EXPECTED")
-    ^
 IndentationError: unexpected indent
 ````
 
@@ -390,7 +384,7 @@ print(a, b)
 
 ## Modifier une variable
 
-Une variable peut varier dans le temps (!= constante).
+Une variable peut varier dans le temps.
 
 On peut réattribuer la valeur assignée:
 
@@ -413,29 +407,6 @@ y ne change pas car il ne partage plus le même id avec x.
 # Les variables
 
 ## Modifier une variable (2)
-
-**Attention!** Lorsque l'on travaille sur un objet complexe et que l'on effectue un passage par référence, on va impacter une variable qui partage cette objet.
-
-````python
-a = {"clef": "valeur"}; b = a
-a["clef"] = "une autre valeur"
-print(a, b)
-print(id(a), id(b))
-````
-
-````
-{'clef': 'une autre valeur'} {'clef': 'une autre valeur'}
-139810876069496 139810876069496
-````
-
-Une modification par référence ne change pas l'id d'une valeur !!
-
----
-
-
-# Les variables
-
-## Modifier une variable (3)
 
 Il est souvent conseillé de ne pas écraser une variable mais d'en créer une nouvelle:
 
@@ -1158,6 +1129,29 @@ print(id(liste_noms))
 140342640205960
 140342640301240 # Nouvelle liste
 ````
+
+---
+
+## Appartée: La mutation (2)
+
+**Attention!** Lorsque l'on travaille sur un objet complexe et que l'on effectue une mutation, on va impacter une variable qui partage cet objet.
+
+````python
+a = ["valeur"]; b = a
+a[0] = "une autre valeur"
+a.append("encore une autre")
+print(a, b)
+print(id(a), id(b))
+````
+
+````
+['une autre valeur', "encore une autre"] 
+['une autre valeur', "encore une autre"]
+139810876069496 139810876069496
+````
+
+Une modification par référence ne change pas l'id d'une valeur !!
+
 
 ---
 
