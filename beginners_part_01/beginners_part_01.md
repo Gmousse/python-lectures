@@ -661,7 +661,7 @@ La classe str a de nombreuses méthodes...
 
 Concatenez du texte:
 - `"un" + " " + "mot"` -> `"un mot"`
-- `"{} mot{}".format(1 + 3, "s")` -> `"3 mots"`
+- `"{} mot{}".format(1 + 3, "s")` -> `"4 mots"`
 
 Formatez du texte:
 - `"un mot".capitalize()` -> `"Un mot"`
@@ -1125,8 +1125,8 @@ liste_noms.append("jean jacques") # ajout à la fin
 print(liste_noms[-1])
 liste_noms.insert(2, "jean robert") 
 print(liste_noms[:4]) # ajout à la position 2
-liste_noms = liste_noms + ["jean charles", "jean claude"]
-# idem: list_noms.extend(["jean charles", "jean claude"])
+list_noms.extend(["jean charles", "jean claude"])
+# liste_noms += ["jean charles", "jean claude"]
 print(liste_noms[5:]) # concaténation
 ````
 
@@ -1134,6 +1134,29 @@ print(liste_noms[5:]) # concaténation
 jean jacques
 ['jean michel', 'jean simon', 'jean robert', 'jean marc']
 ['jean jean', 'jean jacques', 'jean charles', 'jean claude']
+````
+
+---
+
+## Appartée: La mutation
+
+Quand on utilise append, extend, insert, on mute une liste.
+L'id de la liste ne change pas, la modification se fait par référence. C'est pareil pour beaucoup de structures (dict, classes).
+
+Il est parfois préférable de créer une nouvelle liste lors d'une modification:
+````python3
+print(id(liste_noms))
+liste_noms.extend(["jean gilles", "jean naej"])
+print(id(liste_noms))
+liste_noms = liste_noms + ["jean charles", "jean claude"]
+# ou liste_noms += ["jean charles", "jean claude"]
+print(id(liste_noms))
+````
+
+````
+140342640205960
+140342640205960
+140342640301240 # Nouvelle liste
 ````
 
 ---
@@ -1433,6 +1456,308 @@ print(list(car_prices.items())) # Tout
 ````
 
 Toutes les méthodes de `list` sont donc utilisables sur un `dict`!!
+
+---
+
+# Les structures de données
+
+## Le tuple
+
+Le [`tuple`](https://docs.python.org/3/tutorial/datastructures.html#tuples-and-sequences) est une liste une `list` immutable.
+
+Il est identique à la `list` à 4 détails prês:
+- On ne peut pas y ajouter des élements
+- On ne peut pas en supprimer
+- On ne peut pas en modifier
+- On ne peut pas modifier le tuple lui même (ordre...)
+
+Le `tuple` est à la liste ce que la constante est à la variable.
+
+---
+
+# Les structures de données
+
+## Le tuple (2)
+
+Il y a parfois quelques subtilités dans sa création:
+````python
+tuple_vide = (); tuple_vide = tuple()
+tuple_un = (4,) # Notez la virgule !!
+tuple_un = 4, # Notation non conseillée.
+tuple_nombres = (1, 2, 3, 4, 5, 6, 7)
+tuples_noms = tuple(liste_noms)
+````
+
+---
+
+## Le tuple - Immutabilité
+
+Comme nous l'avons vu, un `tuple` ne peut être modifié:
+````python
+tuple_nombres[-1] = 4
+````
+````
+TypeError: 'tuple' object does not support item assignment
+````
+
+Ni supprimé:
+````python
+del tuple_nombres[-1]
+````
+````
+TypeError: 'tuple' object doesn't support item deletion
+````
+
+Ainsi le tuple ne supporte pas les méthodes mutables de la `list`:
+`.extend`, `.append`, `.insert`, `.remove`, `.sort`, `.reverse`, ...
+
+---
+
+## Le tuple - Point commun avec la liste
+
+On peut accéder à la longueur d'un tuple avec `len`:
+````python3
+len(tuple_nombres[-1])
+````
+
+L'indexation et le slicing est identique à la liste:
+````python3
+tuple_nombres[-1]
+tuple_nombres[0:3]
+````
+
+La concaténation (non mutable) est idenEtique:
+````python3
+tuple_nombres += (7, 8)
+````
+
+Le tuple supporte aussi les méthodes de recherches: `.count`, `.index`, `.find`, ...
+
+On peut d'ailleurs le typer le liste: `list(tuple_nombres)`
+
+---
+
+# Les structures de données
+
+## Le set
+
+Le [`set`](https://docs.python.org/3/tutorial/datastructures.html#sets) est une séquence d'élements dédupliqués (sans doublons), sans index et non ordonnée.
+
+Il se crée facilement:
+````python3
+set_vide = set()
+set_letters = set("abcdabegfa")
+print(set_letters)
+set_numbers = set([1, 4, 5, 7, 8, 7, 1])
+print(set_numbers)
+````
+
+````
+{'c', 'a', 'e', 'b', 'g', 'f', 'd'} # Pas un dict!
+{1, 4, 5, 7, 8} # Pas un dict
+````
+
+---
+
+## Le set - Opérations
+
+Le `set` supporte différentes opérations (entre sets) retournant un nouveau set:
+
+| Opération     | Définition     |
+| :------------- | :------------- |
+| `a - b`       | Difference: Donne élements exclusifs à a (not in b)   |
+| `a | b`       | Union: concatène a et b  |
+| `a & b`       | Intersection: élements à la fois dans a et dans b|
+| `a ^ b`       | Donne élements de exclusifs à a et exclusifs à b|
+
+````python3
+a = set('abracadabra')
+b = set('alacazam')
+print(a ^ b)
+````
+
+````
+{'r', 'd', 'b', 'm', 'z', 'l'}
+````
+
+---
+
+## Le set - Complétion
+
+On peut ajouter des élements dans un set: 
+````python3
+a = set('abracadabra')
+a.add("YO")
+print(a)
+b = set('alacazam')
+b.update(a)
+print(b)
+c = b | a # Non mutable !!!!
+print(c)
+````
+
+````
+{'YO', 'c', 'a', 'b', 'r', 'd'}
+{'YO', 'z', 'c', 'a', 'b', 'm', 'l', 'r', 'd'}
+{'YO', 'z', 'c', 'a', 'b', 'm', 'l', 'r', 'd'}
+````
+
+---
+
+
+## Le set - Suppression
+
+On peut supprimer des élements dans un set: 
+````python3
+a.remove("YO")
+print(a)
+removed_element = a.pop()
+print(a, removed_element)
+b.difference_update(a)
+print(b)
+b.clear()
+print(b)
+d = c - a # Non mutable !!!!
+print(d)
+````
+
+````
+{'b', 'd', 'c', 'a', 'r'}
+{'d', 'c', 'a', 'r'} 'b'
+{'YO', 'b', 'z', 'l', 'm'}
+set()
+{'YO', 'b', 'z', 'l', 'm'}
+````
+
+---
+
+## Le set - Dédupliquer un itérable
+
+On peut donc utiliser le set pour dédupliquer des itérables (`list`, `tuple`):
+```python3
+list_to_deduplicate = [5, 2, 4, 5, 2, 4]
+deduplicated_list = list(set(list_to_deduplicate))
+print(deduplicated_list)
+````
+
+````
+[2, 4, 5]
+````
+
+**\/!\\** Le set perd l'ordre de l'itérable d'origine !!
+
+---
+
+# Les erreurs
+
+## Les types d'erreurs / exceptions
+
+Python est très expressif et n'hésite pas à lever des erreurs:
+````
+SyntaxError # Erreur de parsing
+IndentationError # Mauvaise indentation
+NameError # Variable non définie
+TypeError # Erreur de typage
+IndexError # Index inexistant
+KeyError # Clef inexistante .....
+````
+
+Python en a beaucoup déjà définies, ce sont les built-in exceptions: https://docs.python.org/3/library/exceptions.html
+
+---
+
+# Les erreurs
+
+## Les types d'erreurs / exceptions (2)
+
+
+Tout ces types d'erreurs ont un type commun: `Exception`. On dit que ces erreurs héritent de la classe ou du type `Exception`. (cf partie 2).
+
+Il est également possible d'en créer de nouvelles, mais également des dérivés (cf partie 2).
+
+Ainsi les modules et les librairies (modules externes) amènent leurs lots de nouveaux types d'erreurs. 
+
+---
+
+# Les erreurs
+
+## Gérer les erreurs
+
+Lorsqu'une erreur est levée, elle met fin à l'éxecution du programme. Il faut les gérer pour garantir la continuité de notre programme.
+
+On utilise alors les déclarations `try` et `except` pour les gérer.
+
+Le `try` entoure du code à risque (susceptible de lever une exception).
+Si il y a une erreur (attendue), `except` va éxecuter du code qui lui a été fourni. Le programme continue.
+
+---
+
+# Les erreurs
+
+## Gérer les erreurs (2)
+
+Programme sans try / except:
+````python
+dict_students = {"John": 18.65, "Jacques": 10.00}
+print(dict_students["Martine"])
+# KeyError; Le programme s'arrête.
+# Le code dessous ne s'exécute pas.
+print(dict_students["John"]) 
+````
+
+Programme avec try / except gérant les KeyError:
+````python
+try:
+    dict_students = {"John": 18.65, "Jacques": 10.00}
+    print(dict_students["Martine"])
+except KeyError:
+    # Le programme continue.
+    print(dict_students["John"])
+````
+
+---
+
+## Gérer les erreurs (3)
+
+
+On peut chaîner les `except` pour gérer différents types d'erreurs:
+````python
+students_name = ["John", "Gilles", "Jacques", "Jean Charles"]
+students_notes = {"John": 18.65, "Jacques": 10.00, "Gilles": None}
+for student in students_name:
+    try:
+        students_notes[student] += 1.00
+    except TypeError:
+        print(student, "'s score is wrong!")
+        del students_notes[student]
+    except KeyError:
+        print(student, " doesn't have score!")
+    
+print(students_notes) 
+````
+
+````
+Gilles 's note is wrong!
+Jean Charles  doesn't have score!
+{'John': 19.65, 'Jacques': 11.0}
+````
+
+---
+
+# Les erreurs
+
+## Lever une erreur
+
+Lorsque l'on écrit un programme, il peut être intéressant de lever des erreurs pour communiquer avec l'utilisateur (développeur ou autres).
+
+On peut utiliser `raise` pour lever une erreur:
+````python
+if value < 0:
+   # on choisit de lever une erreur avec un message personnalisé.
+   raise ValueError("The value can't be negative!")
+````
+
+
 
 ---
 
