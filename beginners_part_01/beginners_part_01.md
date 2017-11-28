@@ -49,7 +49,7 @@ Langages: Python, JavaScript, Scala, R
 4. Les types primitifs
 5. Les conditions
 6. Les structures de données
-7. Les boucles et autres types d'itérations
+7. Les boucles
 8. Les fonctions
 9. Les erreurs
 10. Les modules et les namespaces
@@ -428,7 +428,7 @@ Si une variable est inutile, on peut la supprimer (forcant ainsi python à la su
 ````python
 a = "Valeur"
 b = a
-del a # on a plus besoin de a
+del a # on n'a plus besoin de a
 print(b); print(a)
 ````
 
@@ -448,7 +448,7 @@ Il faut néanmoins utiliser la suppression avec prudence!
 
 La constante est un nom donné à une valeur qui ne doit pas changer au cours du temps.
 
-On ne peut pas déclarer une *vrai* constante en python.
+On ne peut pas déclarer une *vraie* constante en python.
 
 Par convention on crée juste une variable avec le nom en majuscule:
 
@@ -456,7 +456,7 @@ Par convention on crée juste une variable avec le nom en majuscule:
 MA_SUPER_CONSTANTE = 35 # DO NOT TOUCH OR JUST DIE
 ````
 
-Et surtout on y touche pas!
+Et surtout on n'y touche pas!
 
 ---
 
@@ -480,11 +480,11 @@ Les caractères autorisés pour le nommage sont: `a...z`, `A...z`, `0...9`, `_`.
 
 ## Conventions de nommage (2)
 
-**\/!\\** Ne pas lui donner le nom d'un builtins ou d'un module:
+**\/!\\** Ne pas lui donner le nom d'un built-in ou d'un module:
 
 ````python
-print = "coucou"
-print(12)
+print = "coucou" # on ECRASE print
+print(12) # print ne fonctionne plus
 ````
 
 ````
@@ -850,10 +850,10 @@ Si une condition est fausse (False), on peut vouloir éxecuter un bout de code s
 car_color = "yellow"
 car_is_yellow = car_color == "yellow"
 
-if not car_is_not_yellow:
-    car_price = 10000 # On ne passe pas
+if car_is_yellow:
+    car_price = 8000 # On passe
 else:
-    car_price = 8000  # On passe
+    car_price = 10000  # On ne passe pas
 
 print("Car price: ", car_price)
 ````
@@ -909,7 +909,7 @@ else: # On passe
 ````
 
 ````
-Car price: 7000
+Car price: 8000
 ````
 
 ---
@@ -1538,7 +1538,7 @@ On peut d'ailleurs le typer le liste: `list(tuple_nombres)`
 Le [`set`](https://docs.python.org/3/tutorial/datastructures.html#sets) est une séquence d'élements dédupliqués (sans doublons), sans index et non ordonnée.
 
 Il se crée facilement:
-````python3
+````python
 set_vide = set()
 set_letters = set("abcdabegfa")
 print(set_letters)
@@ -1564,7 +1564,7 @@ Le `set` supporte différentes opérations (entre sets) retournant un nouveau se
 | `a & b`       | Intersection: élements à la fois dans a et dans b|
 | `a ^ b`       | Donne élements de exclusifs à a et exclusifs à b|
 
-````python3
+````python
 a = set('abracadabra')
 b = set('alacazam')
 print(a ^ b)
@@ -1579,7 +1579,7 @@ print(a ^ b)
 ## Le set - Complétion
 
 On peut ajouter des élements dans un set: 
-````python3
+````python
 a = set('abracadabra')
 a.add("YO")
 print(a)
@@ -1602,7 +1602,7 @@ print(c)
 ## Le set - Suppression
 
 On peut supprimer des élements dans un set: 
-````python3
+````python
 a.remove("YO")
 print(a)
 removed_element = a.pop()
@@ -1628,7 +1628,7 @@ set()
 ## Le set - Dédupliquer un itérable
 
 On peut donc utiliser le set pour dédupliquer des itérables (`list`, `tuple`):
-```python3
+```python
 list_to_deduplicate = [5, 2, 4, 5, 2, 4]
 deduplicated_list = list(set(list_to_deduplicate))
 print(deduplicated_list)
@@ -1640,7 +1640,352 @@ print(deduplicated_list)
 
 **\/!\\** Le set perd l'ordre de l'itérable d'origine !!
 
+--- 
+
+# Les boucles
+
+## Boucles et itérations
+
+Une boucle est un concept qui permet de réexecuter un même code plusieurs fois à la suite.
+
+On appelle chaque passage une *itération*.
+
+Exemple: 
+On a un panier rempli de **4 fruits**. On veut **nettoyer chaque fruit**.
+On réalise un nettoyage, puis un autre, puis un autre et enfin un dernier.
+C'est donc une **boucle** de **4 itérations** (1 nettoyage par fruit).
+
+Il existe 2 principales espèces de boucles : le for et le while.
+
+--- 
+
+## Appartée: Les itérables
+
+Un *itérable* est une donnée que l'on peut parcourir (exemple: le panier à fruits). Un type itérable est juste une *collection* d'éléments (ou de valeurs).
+
+Les principaux types itérables: `str`, `list`, `tuple`, `set`, `dict`
+
+Les strings (`str`) sont des itérables ! Un `str` est une *collection* de lettres.
+
+On peut vérifier si un type est itérable avec la fonction `iter`:
+````python
+print(iter("coucou")) # Est itérable
+print(iter(2)) # N'est pas itérable
+````
+
+````
+<str_iterator object at 0x7f41cae259e8> # iterable
+TypeError: 'int' object is not iterable
+````
+
+**\/!\\** [`iter`](https://docs.python.org/3/library/functions.html#iter) ne sert pas à ça à l'origine !
+
 ---
+
+# Les boucles
+
+## La boucle for
+
+La boucle `for` parcourt un *itérable* et applique du code:
+````python
+fruits = ["apple", "perry", "apple", "peach"]
+cleaned_fruits = []
+
+for fruit in fruits:
+    print("I clean my", fruit)
+    cleaned_fruits.append(fruit)
+
+print(cleaned_fruits)
+````
+
+````
+I clean my apple
+I clean my perry
+I clean my apple
+I clean my peach
+['apple', 'perry', 'apple', 'peach']
+````
+
+---
+
+
+# Les boucles
+
+## La boucle for (2)
+
+On peut s'en servir pour modifier un itérable:
+````python
+car_prices = {
+    "c4": 18950, "crz": 27800, "yaris": 18912
+}
+
+for car_name in car_prices:
+    car_price = car_prices[car_name]
+    if car_prices[car_name] > 20000:
+        print("BLACK FRIDAY. 5% DISCOUNT on", car_name)
+        car_prices[car_name] *= 0.95
+
+print(car_prices)
+````
+
+````
+BLACK FRIDAY. 5% DISCOUNT on crz
+{'c4': 18950, 'crz': 26410.0, 'yaris': 18912}
+````
+
+---
+
+## Appartée: enumerate et range 
+
+La fonction `enumerate` génère un *itérator* avec les valeurs et **les indexs** d'un itérable:
+````python
+print(list(enumerate(fruits))
+````
+````
+[(0, 'apple'), (1, 'perry'), (2, 'apple'), (3, 'peach')]
+````
+
+La fonction `range` génère un *itérator* à partir d'un départ (inclusif), d'une fin (exclusive) et d'une étape:
+````python
+print(
+    list(range(0, 5)), # 0 à 4 de 1 en 1
+    list(range(0, 10, 2)) # 0 à 9 de 2 en 2
+)
+````
+````
+[0, 1, 2, 3, 4] [0, 2, 4, 6, 8]
+````
+
+---
+
+
+# Les boucles
+
+## La boucle for (3)
+
+On peut aussi filtrer un itérable:
+````python
+fruits = ["apple", "rotten_apple", "peach", "rotten_apple"]
+
+for index, fruit in enumerate(fruits):
+    if "rotten" in fruit:
+        del fruits[index]
+
+print(fruits)
+````
+
+````
+['apple', 'peach']
+````
+
+---
+
+# Les boucles
+
+## La boucle for (4)
+
+Et on peut itéré un nombre de fois donné grâce à `range`:
+````python
+fruits = ["apple", "apple", "peach", "apple"]
+
+for x in range(1, 4, 1):
+    print("I eat the fruit number", x, fruits.pop())
+
+print(fruits)
+````
+
+````
+I eat the fruit number 1 apple
+I eat the fruit number 2 peach
+I eat the fruit number 3 apple
+["apple"]
+````
+
+---
+
+
+# Les boucles
+
+## La boucle while
+
+Contrairement au `for` la boucle `while` n'itère pas directement sur un itérable.
+
+Elle itère tant qu'une condition est vrai, ou tant qu'on ne la *casse* pas.
+
+Exemple: 
+On a un panier rempli de **4 fruits**.
+On nettoie un fruit tant qu'il reste des fruits à nettoyer.
+
+---
+
+# Les boucles
+
+## La boucle while (2)
+
+Ainsi tant qu'une condition est True on itère:
+
+````python
+fruits = ["apple", "apple", "peach", "apple"]
+count = 0
+
+while len(fruits) >= 0:
+    count += 1
+    print("I eat the fruit number", count, fruits.pop())
+    
+print(fruits)
+````
+
+````
+I eat the fruit number 1 apple
+I eat the fruit number 2 peach
+I eat the fruit number 3 apple
+I eat the fruit number 4 apple
+[]
+````
+
+---
+
+# Les boucles
+
+## La boucle while - Danger
+
+La boucle while peut amener des erreurs si la condition est mal définie:
+````python
+while len(fruits) >= -1: # Mauvaise condition.
+    # La boucle s'arrête trop tard
+    count += 1
+    print("I eat the fruit number", count, fruits.pop())
+
+print(fruits)
+````
+````
+I eat the fruit number 1 apple
+I eat the fruit number 2 peach
+I eat the fruit number 3 apple
+I eat the fruit number 4 apple
+IndexError: pop from empty list
+````
+
+---
+
+
+# Les boucles
+
+## La boucle while - Danger (2)
+
+Elle peut aussi être sans fin (boucle infinie) si mal construite:
+````python
+while len(fruits) >= 0: # Toujours True !!
+    # La boucle ne s'arrête pas 
+    # car len(fruits) ne change pas.
+    count += 1
+    print("I eat the fruit number", count)
+
+print(fruits)
+````
+````
+I eat the fruit number 1
+I eat the fruit number 2
+....
+I eat the fruit number 99999999999999999999999999999999
+````
+
+---
+
+# Les boucles
+
+## La boucle while - Contrôle
+
+La boucle `while` infinie est intéressante si on la maîtrise.
+
+On peut par exemple l'utiliser pour:
+- réaliser une tâche régulièrement et indéfiniment
+- monitorer une valeur
+- réagir à des inputs (actions) de l'utilisateur
+
+On peut la controler avec les mots clefs `continue` et `break`.
+
+On peut également limiter sa vitesse d'itérations.
+
+---
+
+## Appartée: input 
+
+La fonction `input` exige une intéraction écrite de la part de l'utilisateur:
+````python
+mot_de_passe = input("Entrez votre mot de passe") 
+````
+
+La fonction input bloque le programme tant que l'utilisateur n'a pas réaliser l'action demandée.
+Une fois que l'utilisateur a terminé, son *input* arrive en `str`.
+
+---
+
+## Appartée: time.sleep 
+
+La fonction `sleep` du module `time` (on verra les modules dans le dernier chapitre) permet de mettre en pause un programme pendant quelques secondes:
+````python
+from time import sleep
+print("Bonjour...")
+sleep(4)
+print("Monde!") # 4 secondes plus tard
+````
+
+Elle est utilisée pour temporiser un applicatif gourmand, ou attendre un résultat.
+
+---
+
+
+# Les boucles
+
+## La boucle while - Contrôle (2)
+
+Le mot clef `continue` force `while` à passer à l'itération suivante.
+
+Le mot clef `break` casse `while` et met fin aux itérations.
+
+On peut l'utiliser dans le cadre d'intéractions:
+````python3
+historique = []
+while True: # Boucle infinie
+    value = str(input("Entrez une valeur"))
+    if value.strip() != "quit()":
+        historique.append(value)
+        continue
+    print("Leaving the program !")
+    break
+print("Historique:", historique)
+````
+
+---
+
+
+# Les boucles
+
+## La boucle while - Contrôle (3)
+
+Parfois on doit temporiser les itérations d'une boucle.
+
+On utilise alors la fonction `sleep` du module `time`:
+````python3
+from time import sleep
+from datetime import datetime
+
+while True: # Boucle infinie
+    print("Current date:", datetime.now())
+    sleep(2)
+````
+
+````
+Current date: 2017-11-29 00:01:16.343487
+Current date: 2017-11-29 00:01:18.345577
+Current date: 2017-11-29 00:01:20.347678
+Current date: 2017-11-29 00:01:22.349768
+....
+````
+
+---
+
 
 # Les erreurs
 
@@ -1738,6 +2083,34 @@ Jean Charles  doesn't have score!
 
 ---
 
+
+## Gérer les erreurs (4)
+
+
+**\/!\\** Evitez d'utiliser le type Exception:
+````python
+for student in students_name:
+    try:
+        students_notes[student] += 1.00
+    except Exception: # Chaque erreur est une exception
+         print("Il y a eu une erreur !!")
+    except TypeError: # On ne passe plus ici
+        print(student, "'s score is wrong!")
+        del students_notes[student]
+    except KeyError:  # On ne passe plus ici
+        print(student, " doesn't have score!")
+
+print(students_notes) 
+````
+
+````
+Il y a eu une erreur !!
+Il y a eu une erreur !!
+{'John': 19.65, 'Jacques': 11.0}
+````
+
+---
+
 # Les erreurs
 
 ## Lever une erreur
@@ -1750,8 +2123,6 @@ if value < 0:
    # on choisit de lever une erreur avec un message personnalisé.
    raise ValueError("The value can't be negative!")
 ````
-
-
 
 ---
 
