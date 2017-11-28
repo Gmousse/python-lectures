@@ -810,7 +810,7 @@ A partir de maintenant on fera des exercices types TDD (test driven development)
 
 Instructions:
 - Rendez vous sur github: https://git.io/vFj7w
-- Récupérez le fichier variables_types_operators.py
+- Récupérez le fichier variables_types_operators_test.py
 - Ouvrez le dans un éditeur de texte et lisez les consignes.
 
 Temps estimé: 7 minutes
@@ -985,12 +985,11 @@ print(8000 if car_is_yellow else 10000)
 
 ---
 
-
 ###### Exercice 04: Comparaisons et conditions
 
 Instructions:
 - Rendez vous sur github: https://git.io/vFj7w
-- Récupérez le fichier comparisons_conditions.py
+- Récupérez le fichier comparisons_conditions_test.py
 - Ouvrez le dans un éditeur de texte et lisez les consignes.
 
 Temps estimé: 10minutes
@@ -1037,6 +1036,9 @@ print(liste_noms, type(liste_noms), len(liste_noms))
 
 ---
 
+# Les structures de données
+
+
 ## La liste - Indexation
 
 Chaque élément d'une liste a un index (position dans la liste). L'index commence à 0.
@@ -1045,19 +1047,49 @@ On peut alors récupérer un élement par son index:
 
 ````python
 print(liste_noms[0]) # Le premier élément
-print(liste_noms[1]) # Le deuxième élément
+print(liste_noms[3]) # Le quatrième élément
 print(liste_noms[-1]) # Le dernier élément,liste_noms[4]
+print(liste_noms[-2]) # L'avant dernier élément
 ````
 
 ````
 jean michel
-jean simon
+jean charles
 jean jean
+jean charles
 ````
 
 ---
 
-## La liste - Indexation (2)
+# Les structures de données
+
+## La liste - Indexation(2)
+
+
+On peut aussi modifier un élement par son index:
+
+````python
+liste_nombres = [1, 2, 3, 4, 5, 6, 875484]
+liste_nombres[-1] = 7
+print(liste_nombres)
+````
+
+````
+[1, 2, 3, 4, 5, 6, 7]
+````
+
+Si on accède à un index absent, python lève une exception:
+````python
+print(liste_nombres[7])
+````
+````
+IndexError: list index out of range
+````
+
+
+---
+
+## La liste - Indexation (3)
 
 On peut également sélectionné une partie de la liste (slice) en précisant un début (inclusif) et une fin (exclusif):
 
@@ -1083,6 +1115,8 @@ print(liste_noms[::-1]) # tout en partant de la fin
 
 ---
 
+# Les structures de données
+
 ## La liste - Complétion
 
 On peut ajouter des élements dans une liste après sa création:
@@ -1104,6 +1138,7 @@ jean jacques
 
 ---
 
+# Les structures de données
 
 ## La liste - Suppression
 
@@ -1115,16 +1150,294 @@ print(liste_noms[-1])
 liste_noms.remove("jean charles")
 print(liste_noms[-1])
 ````
-
 ````
 jean claudes
 jean charles
 jean jacques
 ````
+---
+
+# Les structures de données
+
+## La liste - Suppression (2)
+
+On peut aussi prélever des éléments dans une liste:
+````python
+nombres = [1, 2, 3, 4, 5, 6, 7]
+dernier_nombre = nombres.pop() # on prélève le dernier
+print(liste_nombres, dernier_nombre)
+deuxieme_nombre = nombres.pop(1) # on prélève le deuxieme
+print(liste_nombres, deuxieme_nombre)
+````
+````
+[1, 2, 3, 4, 5, 6]  7
+[1, 3, 4, 5, 6]  2
+````
 
 ---
 
-# Introduction
+# Les structures de données
+
+## La liste - Suppression (2)
+
+On peut aussi prélever des éléments dans une liste:
+````python
+nombres = [1, 2, 3, 4, 5, 6, 7]
+dernier_nombre = nombres.pop() # on prélève le dernier
+print(liste_nombres, dernier_nombre)
+deuxieme_nombre = nombres.pop(1) # on prélève le deuxieme
+print(liste_nombres, deuxieme_nombre)
+````
+````
+[1, 2, 3, 4, 5, 6]  7
+[1, 3, 4, 5, 6]  2
+````
+
+---
+
+# Les structures de données
+
+## La liste - Modifier l'ordre
+
+On peut aussi modifier l'ordre des élements:
+````python
+nombres = [1, 2, 3, 4, 5, 6, 7]
+nombres.reverse() # On inverse la liste par référence
+print(nombres)
+nombres.sort() # On tri la liste par référence
+print(nombres)
+nombres = nombres[::-1] # On inverse (pas par référence)
+print(nombres)
+````
+````
+[7, 6, 5, 4, 3, 2, 1]
+[1, 2, 3, 4, 5, 6, 7]
+[7, 6, 5, 4, 3, 2, 1]
+````
+
+---
+
+# Les structures de données
+
+## La liste - Chercher dans une liste
+
+On peut réaliser diverses recherches dans une liste:
+````python
+voitures = ["yaris", "c4", "yaris", "crz"]
+print("yaris" in voitures) # yaris est il dans voitures?
+print(voitures.index("c4")) # ou est c4 dans voitures ?
+print(voitures.count("yaris") # combien de yaris ?
+````
+````
+True
+2
+2
+````
+
+---
+
+###### Exercice 05: Les listes
+
+Instructions:
+- Rendez vous sur github: https://git.io/vFj7w
+- Récupérez le fichier lists_test.py
+- Ouvrez le dans un éditeur de texte et lisez les consignes.
+
+Temps estimé: 10 minutes
+
+---
+
+# Les structures de données
+
+## Le dictionnaire
+
+Le [`dict`](https://docs.python.org/3/tutorial/datastructures.html#dictionaries) est une structure simple, non ordonnée, basé fait de clefs et valeurs.
+
+Chaque clef (`str` ou `int`) est unique et est associé à une valeur:
+
+````python
+dict_vide = {}; dict_vide = dict()
+students_notes = {
+    "Simon": 9.68,
+    "Robert": 2.00,
+    "Martine": 18.4
+}
+students_notes = dict(Simon=9.68, Robert=2.00,
+                      Martine=18.4)
+students_notes = dict([
+    ["Simon", 9.68], ["Robert", 2.00], ["Martine", 18.4]
+])
+````
+
+---
+
+# Les structures de données
+
+## Le dictionnaire - Accés à la donnée
+
+Dans un dictionnaire, on peut accéder à une donnée via sa clef:
+````python
+print(students_notes["Simon"])
+````
+
+````
+9.68
+````
+
+Si la clef n'existe pas, python lève une erreur:
+````python
+print(students_notes["Charles"])
+````
+````
+KeyError: 'Charles'
+````
+
+---
+
+## Le dictionnaire - Accés à la donnée (2)
+
+La méthode `get` permet de ne pas lever d'erreurs si la clef n'existe pas:
+````python
+print(students_notes.get("Simon"))
+print(students_notes.get("Charles"))
+````
+
+````
+9.68
+None
+````
+
+On peut aussi préciser une valeur par défaut à retourner si la clef n'existe pas:
+````python
+print(students_notes.get("Charles", 0.0))
+````
+````
+0.0 # La clef Charles n'existe pas. Donc 0.0.
+````
+
+---
+
+## Le dictionnaire - Modification
+On peut modifier le contenu d'un dictionnaire:
+````python
+students_notes["Charles"] = 0.0 # Ajout d'une clef
+
+# Modif d'une clef
+students_notes["Simon"] = students_notes["Simon"] + 2.0
+
+# Mise à jour via un autre dict
+students_notes.update({"Martine": 17.4, "Gilles": 10.5})
+print(students_notes)
+````
+
+````
+{
+    "Simon": 11.68, # Avant 9.68
+    "Charles": 0.0,  # Nouveau
+    "Robert": 2.00,
+    "Martine": 17.4, # Avant: 18.4
+    "Gilles": 10.5   # Nouveau
+}
+````
+
+---
+
+# Les structures de données
+
+
+## Le dictionnaire - Suppression
+
+On peut supprimer supprimer une clef du dictionnaire:
+````python
+car_prices = {
+    "c4": 18950,
+    "crz": 27800,
+    "yaris": 18912
+}
+del car_prices["c4"]
+del car_prices["crz"]
+````
+
+````
+{"yaris": 18912}
+````
+
+---
+# Les structures de données
+
+
+## Le dictionnaire - Recherche
+
+On peut chercher si une clef existe:
+````python
+print("c4" in car_prices)
+print("yaris" in car_prices)
+````
+
+````
+False
+True
+````
+
+---
+
+
+# Les structures de données
+
+
+## Le dictionnaire - Transformation
+
+On peut récupérer les valeurs ou clefs d'un dictionnaire:
+
+````python
+car_prices = {
+    "c4": 18950,
+    "crz": 27800,
+    "yaris": 18912
+}
+print(car_prices.keys()) # Clefs
+print(car_prices.values()) # Valeurs
+print(car_prices.items()) # Tout
+````
+
+````
+dict_keys(['c4', 'crz', 'yaris'])
+dict_values([18950, 27800, 18912])
+dict_items([
+  ('c4', 18950), ('crz', 27800), ('yaris', 18912)])
+````
+
+---
+
+
+# Les structures de données
+
+
+## Le dictionnaire - Transformation (2)
+
+On peut tout récupérer et caster (typer) en liste:
+
+````python
+print(list(car_prices)) # Clefs
+print(list(car_prices.keys())) # Clefs
+print(list(car_prices.values())) # Valeurs
+print(list(car_prices.items())) # Tout
+
+````
+
+````
+['c4', 'crz', 'yaris']
+['c4', 'crz', 'yaris']
+[18950, 27800, 18912]
+[('c4', 18950), ('crz', 27800), ('yaris', 18912)]
+````
+
+Toutes les méthodes de `list` sont donc utilisables sur un `dict`!!
+
+---
+
+
+# Les modules et les namespaces
 
 ## Les fonctions built-in
 
@@ -1136,7 +1449,7 @@ La liste non exhaustive des built-in functions est disponible ici: https://docs.
 
 ---
 
-# Introduction
+# Les modules et les namespaces
 
 ## Les modules
 
@@ -1148,7 +1461,7 @@ Certains modules sont préinstallés avec python: https://docs.python.org/3/py-m
 
 ---
 
-# Introduction
+# Les modules et les namespaces
 
 ## Importer un module
 
@@ -1174,7 +1487,7 @@ print(pi)
 
 ---
 
-# Introduction
+# Les modules et les namespaces
 
 ## Importer un module (2)
 
@@ -1190,7 +1503,7 @@ On peut alors créer une arborescence de fichier `.py` contenant chacun une peti
 ---
 
 
-# Introduction
+# Les modules et les namespaces
 
 ## Comprendre les namespaces
 
@@ -1210,7 +1523,7 @@ print(dir())
 ---
 
 
-# Introduction
+# Les modules et les namespaces
 
 ## Comprendre les namespaces
 
@@ -1223,7 +1536,7 @@ Les built-ins par exemple sont présents par défaut dans le namespace.
 ---
 
 
-# Introduction
+# Les modules et les namespaces
 
 ## Comprendre les namespaces (2)
 
@@ -1242,7 +1555,7 @@ On peut même en voir le contenu: `print(dir(__builtins__))`
 
 ---
 
-# Introduction
+# Les modules et les namespaces
 
 ## Comprendre les namespaces (3)
 
@@ -1256,7 +1569,7 @@ Python nous signal que le nom `pi` n'est pas présent dans le namespace local: `
 
 ---
 
-# Introduction
+# Les modules et les namespaces
 
 ## Comprendre les namespaces (4)
 
