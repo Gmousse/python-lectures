@@ -41,6 +41,16 @@ Langages: Python, JavaScript, Scala, R
 
 ---
 
+# Ressources gratuites
+
+- http://pymbook.readthedocs.io/en/latest/index.html
+- http://pythonvisually.com/ebook/index.html
+- http://www.practicepython.org/
+- http://lepython.com/
+
+---
+
+
 # Plan
 
 1. Introduction
@@ -1986,6 +1996,264 @@ Current date: 2017-11-29 00:01:22.349768
 
 ---
 
+# Les fonctions
+
+## La fonction
+
+La fonction est bout de programme qui ne sera éxecuté que lorsqu'il sera invoqué / appelé (*call*).
+
+Elle peut prendre des paramètres et peut retourner une valeur. 
+
+Par exemple, la fonction print affiche une valeur (passée en paramètre) au moment où on l'appelle:
+
+````python
+print # Ne fait rien car pas appellée
+print(12) # Est appellée avec le paramètre 12
+````
+
+````
+<built-in function print>
+12
+````
+
+---
+
+# Les fonctions
+
+## Appeller une fonction
+
+La fonction est appellée en ouvrant les parenthèses et en lui passant le bon nombre de paramètres (du bon type):
+````python
+# La fonction type prend 1 paramètre, 
+# et retourne son type
+var_type = type([1, 2, 3])
+````
+
+Si on appelle une fonction avec trop peu ou trop de paramètres python lève une erreur:
+````python
+sum_of_vars = sum()
+````
+````
+TypeError: sum expected at least 1 arguments, got 0
+````
+
+---
+
+# Les fonctions
+
+## Définir une fonction
+
+On peut définir ses propres fonctions via le mot clef `def`.
+Une fonction a besoin d'un nom, de paramètres (si besoin) et d'un code à éxecuter:
+
+````python
+def print_hello_world(): # Le nom et aucun paramètres
+    print("Hello world!") # Le code
+    
+print_hello_world() # Réutilisable à l'infini !!!
+print_hello_world()
+````
+
+````
+Hello world!
+Hello world!
+````
+
+---
+
+# Les fonctions
+
+## Définir une fonction (2)
+
+On peut lui spécifier des paramètres obligatoires (positionnels) qui seront utilisés pour un calcul:
+
+````python
+def print_sum(x, y): # print_sum prend 2 paramètres
+    print(x + y)
+    
+print_sum(10, 15) # Réutilisable
+print_sum(2, 4)
+print_sum(4, 2)
+
+````
+
+````
+25
+6
+6
+````
+
+---
+
+## Définir une fonction (3)
+
+On peut aussi lui spécifier des paramètres optionnels (ou nommés):
+
+````python
+def print_bad_fruits(fruits, bad="rotten"): 
+# print_bad_fruits a un paramètre obligatoire: fruits
+# et un paramètre optionnel: bad, "rotten" par défaut
+    for fruit in fruits:
+        if bad in fruit:
+            print("This fruit is bad:", fruit)
+    
+print_sum(["peach", "apple", "rotten_peach"])
+print_sum(
+    ["peach", "bitter_peach", "bitter_apple",
+    "rotten_peach"], bad="bitter"
+)
+````
+
+````
+This fruit is bad rotten_peach
+This fruit is bad bitter_peach
+This fruit is bad bitter_apple
+````
+
+--- 
+
+## Définir une fonction (4)
+
+Une fonction peut retourner une valeur grâce au mot clef `return`:
+````python3
+def wrong_sum(x, y):
+   somme = x + y # wrong_sum ne retourne rien
+
+print(wrong_sum(4, 5))
+result = wrong_sum(4, 5)
+print(result) # result n'a pas valeur!
+
+def good_sum(x, y):
+    return x + y
+    
+print(good_sum(4, 5))
+result2 = good_sum(4, 5)
+print(result2) # result a une valeur!
+````
+
+````
+None
+None
+9
+9
+````
+
+---
+
+# Les fonctions
+
+## Définir une fonction (5)
+
+`return` fait sortir de la fonction. Tout code sous un return est "mort": 
+````python3
+def good_sum(x, y):
+    result = x + y
+    return result
+    # Code inatteignable après le return
+    print("Sum:", result) # code mort
+    
+print(good_sum(4, 5))
+````
+
+````
+9
+````
+
+--- 
+
+## Définir une fonction (6)
+
+On peut se servir du return pour éviter un `else` inutile:
+````python3
+def bad_car_price(car_color):
+    if car_color == "yellow":
+       return 8000
+    else:  # Else inutile
+       return 10000
+
+def car_price(car_color):
+    if car_color == "yellow":
+       return 8000
+    return 10000  # C'est plus élégant
+
+print(bad_car_price("yellow"), give_car_price("green"))
+print(car_price("yellow"), car_price("green"))
+````
+
+````
+8000 10000
+8000 10000
+````
+
+---
+
+# Les fonctions
+
+## Refactor grâce aux fonctions
+
+Refactor: Réecrire une partie du programme, pour le rendre plus élégant, lisible et maintenable tout en gardant sa fonctionnalité.
+
+Les fonctions permettent de découper son code.
+
+On peut alors réutiliser certains bouts de code plutot que de les dupliquer.
+
+On peut également découper son programme en plusieurs fichiers.
+
+---
+
+````python
+fruits = ["apple", "rotten_perry", "rotten_apple",
+          "peach"]
+good_fruits = []
+
+for fruit in fruits:
+    if "rotten" not in fruit:
+        good_fruits.append(fruit)
+
+vegetables = ["rotten_carrot", "tomato", "rotten_carrot",
+              "rotten_carrot"]
+good_vegetables = []
+
+for vegetable in vegetables:   # Code doublon
+    if "rotten" not in vegetable:
+        good_vegetables.append(vegetable)
+
+print(good_fruits, good_vegetables)
+````
+
+````
+['apple', 'peach'] ['tomato']
+````
+
+---
+
+````python3
+def is_rotten(element): # Fonction prédicat
+    return "rotten" in element
+    
+def list_good_elements(elements):
+    good_elements = []
+    for element in elements:
+        if is_rotten(element):
+            good_elements.append(element)
+    return good_elements
+
+fruits = ["apple", "rotten_perry", "rotten_apple",
+          "peach"]
+vegetables = ["rotten_carrot", "tomato", "rotten_carrot",
+              "rotten_carrot"]
+
+print(
+    list_good_elements(fruits),
+    list_good_elements(vegetables)
+)
+````
+
+````
+['apple', 'peach'] ['tomato']
+````
+
+--- 
 
 # Les erreurs
 
