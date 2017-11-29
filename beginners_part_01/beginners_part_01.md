@@ -665,10 +665,10 @@ Remplacez dans du texte:
 Cherchez dans du texte:
 - `"mot" in "un mot"` -> `True`
 - `"un mot".startswith("un")` -> `True`
-- `"un mot".endswith("un")` -> `True`
+- `"un mot".endswith("mot")` -> `True`
 
 Séparez du texte en plusieurs textes:
-- `"un mot".replace(" ")` -> `["un", "mot"]`
+- `"un mot".split(" ")` -> `["un", "mot"]`
 
 
 ---
@@ -1104,7 +1104,7 @@ On peut ajouter des élements dans une liste après sa création:
 ````python
 liste_noms.append("jean jacques") # ajout à la fin
 print(liste_noms[-1])
-liste_noms.insert(2, "jean robert") 
+liste_noms.insert(2, "jean robert")
 print(liste_noms[:4]) # ajout à la position 2
 list_noms.extend(["jean charles", "jean claude"])
 # liste_noms += ["jean charles", "jean claude"]
@@ -1155,7 +1155,7 @@ print(id(a), id(b))
 ````
 
 ````
-['une autre valeur', "encore une autre"] 
+['une autre valeur', "encore une autre"]
 ['une autre valeur', "encore une autre"]
 139810876069496 139810876069496
 ````
@@ -1588,7 +1588,7 @@ print(a ^ b)
 
 ## Le set - Complétion
 
-On peut ajouter des élements dans un set: 
+On peut ajouter des élements dans un set:
 ````python
 a = set('abracadabra')
 a.add("YO")
@@ -1611,7 +1611,7 @@ print(c)
 
 ## Le set - Suppression
 
-On peut supprimer des élements dans un set: 
+On peut supprimer des élements dans un set:
 ````python
 a.remove("YO")
 print(a)
@@ -1650,7 +1650,7 @@ print(deduplicated_list)
 
 **\/!\\** Le set perd l'ordre de l'itérable d'origine !!
 
---- 
+---
 
 # Les boucles
 
@@ -1660,14 +1660,14 @@ Une boucle est un concept qui permet de réexecuter un même code plusieurs fois
 
 On appelle chaque passage une *itération*.
 
-Exemple: 
+Exemple:
 On a un panier rempli de **4 fruits**. On veut **nettoyer chaque fruit**.
 On réalise un nettoyage, puis un autre, puis un autre et enfin un dernier.
 C'est donc une **boucle** de **4 itérations** (1 nettoyage par fruit).
 
 Il existe 2 principales espèces de boucles : le for et le while.
 
---- 
+---
 
 ## Appartée: Les itérables
 
@@ -1745,7 +1745,7 @@ BLACK FRIDAY. 5% DISCOUNT on crz
 
 ---
 
-## Appartée: enumerate et range 
+## Appartée: enumerate et range
 
 La fonction `enumerate` génère un *itérator* avec les valeurs et **les indexs** d'un itérable:
 ````python
@@ -1822,7 +1822,7 @@ Contrairement au `for` la boucle `while` n'itère pas directement sur un itérab
 
 Elle itère tant qu'une condition est vrai, ou tant qu'on ne la *casse* pas.
 
-Exemple: 
+Exemple:
 On a un panier rempli de **4 fruits**.
 On nettoie un fruit tant qu'il reste des fruits à nettoyer.
 
@@ -1841,7 +1841,7 @@ count = 0
 while len(fruits) >= 0:
     count += 1
     print("I eat the fruit number", count, fruits.pop())
-    
+
 print(fruits)
 ````
 
@@ -1886,7 +1886,7 @@ IndexError: pop from empty list
 Elle peut aussi être sans fin (boucle infinie) si mal construite:
 ````python
 while len(fruits) >= 0: # Toujours True !!
-    # La boucle ne s'arrête pas 
+    # La boucle ne s'arrête pas
     # car len(fruits) ne change pas.
     count += 1
     print("I eat the fruit number", count)
@@ -1919,11 +1919,11 @@ On peut également limiter sa vitesse d'itérations.
 
 ---
 
-## Appartée: input 
+## Appartée: input
 
 La fonction `input` exige une intéraction écrite de la part de l'utilisateur:
 ````python
-mot_de_passe = input("Entrez votre mot de passe") 
+mot_de_passe = input("Entrez votre mot de passe")
 ````
 
 La fonction input bloque le programme tant que l'utilisateur n'a pas réaliser l'action demandée.
@@ -1931,7 +1931,7 @@ Une fois que l'utilisateur a terminé, son *input* arrive en `str`.
 
 ---
 
-## Appartée: time.sleep 
+## Appartée: time.sleep
 
 La fonction `sleep` du module `time` (on verra les modules dans le dernier chapitre) permet de mettre en pause un programme pendant quelques secondes:
 ````python
@@ -2002,7 +2002,7 @@ Current date: 2017-11-29 00:01:22.349768
 
 La fonction est bout de programme qui ne sera éxecuté que lorsqu'il sera invoqué / appelé (*call*).
 
-Elle peut prendre des paramètres et peut retourner une valeur. 
+Elle peut prendre des paramètres et peut retourner une valeur.
 
 Par exemple, la fonction print affiche une valeur (passée en paramètre) au moment où on l'appelle:
 
@@ -2024,7 +2024,7 @@ print(12) # Est appellée avec le paramètre 12
 
 La fonction est appellée en ouvrant les parenthèses et en lui passant le bon nombre de paramètres (du bon type):
 ````python
-# La fonction type prend 1 paramètre, 
+# La fonction type prend 1 paramètre,
 # et retourne son type
 var_type = type([1, 2, 3])
 ````
@@ -2049,7 +2049,7 @@ Une fonction a besoin d'un nom, de paramètres (si besoin) et d'un code à éxec
 ````python
 def print_hello_world(): # Le nom et aucun paramètres
     print("Hello world!") # Le code
-    
+
 print_hello_world() # Réutilisable à l'infini !!!
 print_hello_world()
 ````
@@ -2070,7 +2070,7 @@ On peut lui spécifier des paramètres obligatoires (positionnels) qui seront ut
 ````python
 def print_sum(x, y): # print_sum prend 2 paramètres
     print(x + y)
-    
+
 print_sum(10, 15) # Réutilisable
 print_sum(2, 4)
 print_sum(4, 2)
@@ -2090,13 +2090,13 @@ print_sum(4, 2)
 On peut aussi lui spécifier des paramètres optionnels (ou nommés):
 
 ````python
-def print_bad_fruits(fruits, bad="rotten"): 
+def print_bad_fruits(fruits, bad="rotten"):
 # print_bad_fruits a un paramètre obligatoire: fruits
 # et un paramètre optionnel: bad, "rotten" par défaut
     for fruit in fruits:
         if bad in fruit:
             print("This fruit is bad:", fruit)
-    
+
 print_sum(["peach", "apple", "rotten_peach"])
 print_sum(
     ["peach", "bitter_peach", "bitter_apple",
@@ -2110,7 +2110,7 @@ This fruit is bad bitter_peach
 This fruit is bad bitter_apple
 ````
 
---- 
+---
 
 ## Définir une fonction (4)
 
@@ -2125,7 +2125,7 @@ print(result) # result n'a pas valeur!
 
 def good_sum(x, y):
     return x + y
-    
+
 print(good_sum(4, 5))
 result2 = good_sum(4, 5)
 print(result2) # result a une valeur!
@@ -2144,14 +2144,14 @@ None
 
 ## Définir une fonction (5)
 
-`return` fait sortir de la fonction. Tout code sous un return est "mort": 
+`return` fait sortir de la fonction. Tout code sous un return est "mort":
 ````python3
 def good_sum(x, y):
     result = x + y
     return result
     # Code inatteignable après le return
     print("Sum:", result) # code mort
-    
+
 print(good_sum(4, 5))
 ````
 
@@ -2159,7 +2159,7 @@ print(good_sum(4, 5))
 9
 ````
 
---- 
+---
 
 ## Définir une fonction (6)
 
@@ -2230,7 +2230,7 @@ print(good_fruits, good_vegetables)
 ````python3
 def is_rotten(element): # Fonction prédicat
     return "rotten" in element
-    
+
 def list_good_elements(elements):
     good_elements = []
     for element in elements:
@@ -2253,7 +2253,7 @@ print(
 ['apple', 'peach'] ['tomato']
 ````
 
---- 
+---
 
 # Les erreurs
 
@@ -2282,7 +2282,7 @@ Tout ces types d'erreurs ont un type commun: `Exception`. On dit que ces erreurs
 
 Il est également possible d'en créer de nouvelles, mais également des dérivés (cf partie 2).
 
-Ainsi les modules et les librairies (modules externes) amènent leurs lots de nouveaux types d'erreurs. 
+Ainsi les modules et les librairies (modules externes) amènent leurs lots de nouveaux types d'erreurs.
 
 ---
 
@@ -2309,7 +2309,7 @@ dict_students = {"John": 18.65, "Jacques": 10.00}
 print(dict_students["Martine"])
 # KeyError; Le programme s'arrête.
 # Le code dessous ne s'exécute pas.
-print(dict_students["John"]) 
+print(dict_students["John"])
 ````
 
 Programme avec try / except gérant les KeyError:
@@ -2339,8 +2339,8 @@ for student in students_name:
         del students_notes[student]
     except KeyError:
         print(student, " doesn't have score!")
-    
-print(students_notes) 
+
+print(students_notes)
 ````
 
 ````
@@ -2368,7 +2368,7 @@ for student in students_name:
     except KeyError:  # On ne passe plus ici
         print(student, " doesn't have score!")
 
-print(students_notes) 
+print(students_notes)
 ````
 
 ````
