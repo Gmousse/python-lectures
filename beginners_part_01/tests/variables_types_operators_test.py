@@ -69,14 +69,19 @@ class Test_variables_types_operators(unittest.TestCase):
 
         Vous devez donc:
           - Traitez les demandes du client et enregistrez le nouveau mail dans une variable formated_email_content.
+          /!\ Pour la dernière consigne, vous aurez besoin de rajouter un saut de ligne \n devant votre signature.
           - Vérifiez que le nouveau mail ne contienne plus d'émoticones :D. Enregistrez le résultat dans has_emots.
           - (OPTIONAL) Essayez de deviner quel est le type de has_emots. Affichez son type dans la console.
+
+        Le formatage ne sera pas parfait, c'est normal.
+        On y reviendra plus tard.
+
         """
         email_content = """cher client,  :D
 
-Merci de vous être inscrit à notre newsletter trop super.
+merci de vous être inscrit à notre newsletter trop super.
 
-Nous vous remercions de votre confiance.
+nous vous remercions de votre confiance.
 
 :D
         """
