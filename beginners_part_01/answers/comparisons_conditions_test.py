@@ -63,7 +63,7 @@ class Test_comparisons_conditions(unittest.TestCase):
         on verra comment refaire ce code proprement.
 
         Différents scénarios vont être testé dans cet exercice !
-        Votre code est englobé dans une fonction (2 chapitres plus tard).
+        Votre code, sans que vous le voyez est englobez dans une fonction (2 chapitres plus tard).
         Veillez donc à respecter l'indentation.
         """
 
@@ -71,7 +71,28 @@ class Test_comparisons_conditions(unittest.TestCase):
                                    car_is_tinted, client_is_club_member):
 
             # CODE HERE
+            car_sell_price = car_base_price
+            if car_type == "essence":
+                car_sell_price -= car_base_price * 0.03
+            elif car_type == "electric":
+                car_sell_price += 2000
+            else:
+                car_sell_price -= 150
 
+            car_has_crappy_color = (car_color == "yellow" or car_color == "green")
+            if not car_has_crappy_color and car_is_fully_equiped:
+                car_sell_price += 2000
+            elif car_has_crappy_color and car_is_fully_equiped:
+                car_sell_price -= car_base_price * 0.02
+                car_sell_price += 1000
+            elif car_has_crappy_color and not car_is_fully_equiped:
+                car_sell_price -= car_base_price * 0.02
+
+            if car_is_tinted:
+                car_sell_price += 600
+
+            if client_is_club_member:
+                car_sell_price -= car_sell_price * 0.05
             # STOP HERE
             print("Car options: ",
                   "Price:", car_base_price,
@@ -84,7 +105,7 @@ class Test_comparisons_conditions(unittest.TestCase):
             return car_sell_price
 
         self.assertEqual(compute_car_sell_price(8050, "red", "gazoil", False, False, True), 7505)
-        self.assertEqual(compute_car_sell_price(18000, "yellow", "electric", True, True, True), 20278)
+        self.assertEqual(compute_car_sell_price(18000, "yellow", "electric", True, True, True), 20178)
         self.assertEqual(compute_car_sell_price(18000, "red", "gazoil", False, False, False), 17850)
         self.assertEqual(compute_car_sell_price(17000, "red", "essence", True, True, False), 19090)
         self.assertEqual(compute_car_sell_price(8050, "green", "essence", False, False, True), 7265.125)

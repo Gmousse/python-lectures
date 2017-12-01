@@ -645,7 +645,7 @@ Concatenez du texte:
 - `"{} mot{}".format(1 + 3, "s")` -> `"4 mots"`
 
 Formatez du texte:
-- `"un mot".capitalize()` -> `"Un mot"`
+- `"un MOT".capitalize()` -> `"Un MOT"`
 - `"UN mot".lower()` -> `"un mot"`
 - `"un mot".upper()` -> `"UN MOT`
 - `"uN MOT".swapcase()` -> `"Un mot"`
@@ -1081,7 +1081,7 @@ print(liste_noms[1:4]) # 2ème à l'avant dernier (4ème)
 print(liste_noms[:-1]) # tout sauf le dernier
 print(liste_noms[1:]) # tout sauf le premier
 print(liste_noms[::2]) # tout de 2 en 2
-print(liste_noms[1:-1:2]) # 1er au 4ème de 2 en 2
+print(liste_noms[1:-1:2]) # 2eme au 4ème de 2 en 2
 print(liste_noms[::-1]) # tout en partant de la fin
 ````
 
@@ -1257,7 +1257,7 @@ print(voitures.count("yaris") # combien de yaris ?
 ````
 ````
 True
-2
+1
 2
 ````
 
