@@ -166,7 +166,7 @@ De nombreuses fonctions ou types sont disponibles par défaut dans le namespace 
 
 Par exemple, la fonction `print` est une fonction built-in.
 
-La liste non exhaustive des built-in functions est disponible ici: https://docs.python.org/3/library/functions.html
+La liste non exhaustive des built-in functions est disponible ici: https://docs.python.org/3/library/index.html
 
 ---
 
@@ -221,6 +221,63 @@ from .my_folder.my_file import my_function
 On peut alors créer une arborescence de fichier `.py` contenant chacun une petite partie du code, que l'on importera au besoin.
 
 
+---
+
+## Les modules built-ins indispensables
+
+- [`datetime`](https://docs.python.org/3/library/datetime.html): gestion des dates (formatage, types, calculs...)
+- [`math`](https://docs.python.org/3/library/math.html): fonctions de calculs et constantes
+- [`os`](https://docs.python.org/3/library/os.html), [`sys`](https://docs.python.org/3/library/sys.html), [`suprocess`](https://docs.python.org/3/library/subprocess.html), [`shutil`](https://docs.python.org/3/library/shutil.html): dialoguer avec l'os, avoir des infos du système, éxecuter des commandes, gérer les fichiers
+- [`random`](https://docs.python.org/3/library/random.html): génération aléatoire (nombres, mélange...)
+- [`collection`](https://docs.python.org/3/library/collections.html): structures de données additionnelles
+- [`logging`](https://docs.python.org/3/library/logging.html): gestionnaire de log / print
+- [`json`](https://docs.python.org/3/library/json.html), [`csv`](https://docs.python.org/3/library/csv.html): lecture, écriture de fichiers (json, csv)
+
+
+---
+
+## Les modules built-ins indispensables (2)
+
+- **EXTERNE** [`requests`](http://docs.python-requests.org/en/master/): requêtes HTTP (intéractions avec apis web...)
+- [`argparse`](`https://docs.python.org/3/library/argparse.html`): gestionnaire de paramètres de script
+- [`threading`](https://docs.python.org/3/library/threading.html), [`multiprocessing`](https://docs.python.org/3/library/multiprocessing.html): parallélisation de calculs
+- [`itertools`](https://docs.python.org/3/library/itertools.html), [`functools`](https://docs.python.org/3/library/functools.html): programmation fonctionnelle
+- [`string`](`https://docs.python.org/3/library/string.html`), [`re`](https://docs.python.org/3/library/re.html): templating, formattage et regexp
+- [`operator`](https://docs.python.org/3/library/operator.html): tout les opérateurs en fonctions
+- [`configparser`](https://docs.python.org/3/library/configparser.html): gestionnaire de configuration
+- [`unittest`](https://docs.python.org/3/library/unittest.html): utilitaires pour tests unitaires
+---
+
+---
+
+## Appartée - pip
+
+[`pip`](https://pip.pypa.io/en/stable/) est un gestionnaire de paquets ultra complet pour python. Il permet d'installer et de gérer de modules / librairies externes pour python (dépôt `pypa`). 
+Ainsi sur votre système vous pouvez par exemple installer le module `requests`:
+````
+pip3 install requests
+pip3 install requests==2.18.4
+````
+
+Mais il permet également de gérer les paquets:
+````
+pip3 install --upgrade requests
+pip3 uninstall requests
+````
+
+**Il est normalement installé par défaut**. Si ce n'est pas le cas: [installez le !](https://pip.pypa.io/en/stable/installing/#do-i-need-to-install-pip)
+
+---
+
+## Quelques modules / librairies externes
+
+- **INDISPENSABLE** [`requests`](http://docs.python-requests.org/en/master/): requêtes HTTP (intéractions avec apis web...)
+- [`sqlalchemy`](http://www.sqlalchemy.org/): ORM pour bases de données sql (et autres)
+- [`numpy`](http://www.numpy.org/): structures (Array) et calculs scientifiques
+- [`pandas`](https://pandas.pydata.org/): structures (DataFrame) et calculs scientifiques
+- [`matplotlib`](http://matplotlib.org/): visualisation de données
+- [`scikit-learn`](http://scikit-learn.org/stable/index.html): machine learning pour python
+- [`flask`](http://flask.pocoo.org/): création d'api HTTP (rest et autres)
 ---
 
 
