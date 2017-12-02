@@ -39,14 +39,14 @@ class Test_variables_types_operators(unittest.TestCase):
           - Déclarez une variable circle_diameter contenant le diamètre du cercle
             sachant que le rayon est égal à 13 (cm).
           - Déclarez une variable circle_circumference contenant la circonférence du cercle
-            celle ci étant égale à 82 (cm).
+            celle ci étant égale à 81.6814 (cm).
           - Calculez pi et enregistrez le résultat dans une variable pi.
           - (OPTIONAL) Essayez de deviner le type de la variable pi. Affichez son type dans la console.
         """
         # CODE HERE
         circle_rayon = 13
         circle_diameter = circle_rayon * 2
-        circle_circumference = 82
+        circle_circumference = 81.6814
         pi = circle_circumference / circle_diameter
         print(type(pi))
         # STOP HERE
@@ -55,7 +55,7 @@ class Test_variables_types_operators(unittest.TestCase):
 
         self.assertTrue(isinstance(circle_diameter, int))
         self.assertTrue(isinstance(circle_circumference, int))
-        self.assertTrue(round(pi, 4) == 3.1538)
+        self.assertTrue(round(pi, 4) == 3.1415)
 
     def test_pretty_text(self):
         """
