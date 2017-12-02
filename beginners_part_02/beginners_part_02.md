@@ -252,7 +252,7 @@ On peut alors créer une arborescence de fichier `.py` contenant chacun une peti
 
 ## Appartée - pip
 
-[`pip`](https://pip.pypa.io/en/stable/) est un gestionnaire de paquets ultra complet pour python. Il permet d'installer et de gérer de modules / librairies externes pour python (dépôt `pypa`). 
+[`pip`](https://pip.pypa.io/en/stable/) est un gestionnaire de paquets ultra complet pour python. Il permet d'installer et de gérer des modules / librairies externes pour python (dépôt `pypa`). 
 Ainsi sur votre système vous pouvez par exemple installer le module `requests`:
 ````
 pip3 install requests
