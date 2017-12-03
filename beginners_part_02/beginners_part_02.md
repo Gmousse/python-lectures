@@ -162,7 +162,7 @@ if value < 0:
 
 ## Les fonctions built-in
 
-De nombreuses fonctions ou types sont disponibles par défaut dans le namespace (ou scope) de python, ce sont les **built-in functions**.
+De nombreuses fonctions ou types sont disponibles par défaut dans le namespace global de python, ce sont les **built-in functions**.
 
 Par exemple, la fonction `print` est une fonction built-in.
 
@@ -202,7 +202,7 @@ print(pi)
 Ou même tout importer d'un module:  **\/!\\**
 
 ````python
-from math import *
+from math import * # charge tout dans le namespace
 print(pi)
 ````
 
@@ -212,18 +212,22 @@ print(pi)
 
 ## Importer un module (2)
 
+
 On peut aussi utiliser le système de modules pour découper son programme en plusieurs fichiers:
 
 ````python
 from .my_folder.my_file import my_function
+# On importe my_function du sous-module my_file
 ````
 
 On peut alors créer une arborescence de fichier `.py` contenant chacun une petite partie du code, que l'on importera au besoin.
 
+**Pour que python sache reconnaître un fichier comme un module, le dossier doit contenir un fichier `__init__.py` !**
+
 
 ---
 
-## Les modules built-ins indispensables
+## Les modules internes indispensables
 
 - [`datetime`](https://docs.python.org/3/library/datetime.html): gestion des dates (formatage, types, calculs...)
 - [`math`](https://docs.python.org/3/library/math.html): fonctions de calculs et constantes
@@ -236,7 +240,7 @@ On peut alors créer une arborescence de fichier `.py` contenant chacun une peti
 
 ---
 
-## Les modules built-ins indispensables (2)
+## Les modules internes indispensables (2)
 
 - **EXTERNE** [`requests`](http://docs.python-requests.org/en/master/): requêtes HTTP (intéractions avec apis web...)
 - [`argparse`](`https://docs.python.org/3/library/argparse.html`): gestionnaire de paramètres de script
@@ -285,44 +289,26 @@ pip3 uninstall requests
 
 ## Comprendre les namespaces
 
-Quand une fonction, une variable, ou un module est utilisable dans python, on dit qu'elle est présente dans le namespace (ou scope).
+Quand une fonction, une variable, ou un module est utilisable dans python, elle est présente dans le *namespace* (ou *scope*) courant.
 
-Les built-ins par exemple sont présents par défaut.
+On a deux types de namespaces:
+- global (son contenu est accessible partout)
+- local (son contenu est accessible dans une partie du code)
 
-Pourcomprendre on utilise la fonction `dir` qui liste tout ce qui est dans le namespace:
-
-````
-print(dir())
-````
-
-`['__annotations__', '__builtins__', '__doc__', '__loader__', '__name__', '__package__', '__spec__']`
-
+Les built-ins par exemple sont présents par défaut dans le namespace global.
 
 ---
-
-
-# Les modules et les namespaces
-
-## Comprendre les namespaces
-
-Quand une fonction, une variable, ou un module est utilisable dans python, on dit qu'elle est présente dans le namespace (ou scope).
-
-Les namespaces sont (~) une liste de noms de ce qui est accessible à un endroit donné du programme.
-
-Les built-ins par exemple sont présents par défaut dans le namespace.
-
----
-
 
 # Les modules et les namespaces
 
 ## Comprendre les namespaces (2)
 
 
-Pour visualiser un namespace, on utilise la fonction `dir` qui liste tout ce qui est dans le namespace local:
+Pour visualiser un namespace, on utilise les fonctions `globals` ou `locals` (ou `dir`) qui liste tout ce qui est dans le namespace global et local:
 
 ````python
-print(dir())
+print(globals())
+print(locals()) # ou dir()
 ````
 
 `['__annotations__', '__builtins__', '__doc__', '__loader__', '__name__', '__package__', '__spec__']`
@@ -337,13 +323,13 @@ On peut même en voir le contenu: `print(dir(__builtins__))`
 
 ## Comprendre les namespaces (3)
 
-Si on essaye d'accéder à une variable qui n'est pas présent dans le namespace local:
+Si on essaye d'atteindre une variable qui n'est pas présent ni dans le namespace local, ni dans le global, on dit qu'elle n'est pas à portée (pas dans le scope):
 
 ````python
 print(pi)
 ````
 
-Python nous signal que le nom `pi` n'est pas présent dans le namespace local: `NameError: name 'pi' is not defined`.
+Python nous signal que le nom `pi` n'est pas présent dans le namespace: `NameError: name 'pi' is not defined`.
 
 ---
 
@@ -351,12 +337,12 @@ Python nous signal que le nom `pi` n'est pas présent dans le namespace local: `
 
 ## Comprendre les namespaces (4)
 
-Lorsque l'on importe un module, ou que l'on déclare une variable, python l'ajoute alors au namespace:
+Lorsque l'on importe un module, ou que l'on déclare une variable, python l'ajoute alors au namespace courant (local):
 
 ````python
 from math import pi
 print(pi)
-print(dir())
+print(locals())
 ````
 Ce qui rend l'accés à une variable ou à une fonction possible:
 ````
@@ -364,4 +350,285 @@ Ce qui rend l'accés à une variable ou à une fonction possible:
 [..., 'pi']
 ````
 
+Si on est à la racine du programme, elle est aussi ajouté dans le global.
+
 ---
+
+## La portée d'une variable
+
+En raison de l'existende de namespaces locals ou global, on dit qu'une variable a une portée (scope):
+- globale si la variable est atteignable de partout (scope global)
+- locale si la variable est atteignable dans une partie du programme uniquement (scope local).
+
+Exemple avec `globals` et `locals`:
+
+````python
+a = 1
+print(globals(), locals())
+````
+````
+{..., 'a': 1} {..., 'a': 1}
+````
+On est à ici à la racine du programme, ce qu'on déclare est global.
+
+---
+
+## La portée d'une variable (2)
+
+Une fonction a son propre namespace (local). Depuis l'intérieur d'une fonction, on peut accéder au namespace global. En revanche, une variable déclarée dans la fonction n'est accessible que dans celle ci (dans son namespace local):
+````python
+one = 1 # one est global
+
+print(globals(), locals())
+
+def addOne(number):
+    result = one + number
+    print(globals(), locals())
+    return result
+
+
+print(addOne(4))
+print(globals(), locals())
+````
+
+---
+
+# Les fichiers
+
+## La fonction open
+
+Pour lire ou écrire un fichier, on utilise la fonction open (qui ouvre un flux vers ce fichier).
+
+Un flux s'ouvre et se ferme (quand on a terminé avec lui):
+````python
+file = open("myfile.txt")
+print(file)
+print(file.read())
+file.close()
+print(file.read())
+````
+
+````
+<_io.TextIOWrapper name='myfile.txt' mode='r'
+                   encoding='UTF-8'>
+'HELLO WORLD!'
+ValueError: I/O operation on closed file.
+````
+
+---
+
+## Appartée - La déclaration with
+
+Si on peut automatiser la fermeture d'un fichier (ou de tout flux) on peut utiliser la déclaration `with`:
+
+````python3
+with open("myfile.txt") as file:
+   print(file.read())
+````
+
+Le flux se fermera de lui même une fois le bloc de code terminé.
+
+Il est conseillé d'utiliser cette notation plutôt que la méthode `.close`.
+
+---
+
+
+# Les fichiers
+
+## Lire un fichier
+
+On peut lire un fichier en précisant un mode d'ouverture read `r` (mode par défaut):
+
+````python
+with open("myfile.txt", mode="r") as file:
+   print(file.read())
+````
+
+Différentes méthodes sont utilisable sur fichier pour le lire: 
+````python
+file.read() # Lit tout le fichier
+file.readline() # Retourne la première ligne du flux
+file.readlines() # Retourne une liste avec chaque ligne
+````
+
+---
+
+# Les fichiers
+
+## Lire un fichier (2)
+
+
+On ne peut lire un fichier inexistant:
+````python
+with open("nanananana.txt", mode="r") as file:
+   print(file.read())
+````
+
+Python nous l'indique par une erreur:
+````
+FileNotFoundError: [Errno 2] No such file or directory: 'nanana.txt'
+
+````
+
+---
+
+
+## Lire un fichier (3)
+
+Un flux se consomme (on ne le lit qu'une fois):
+
+````python3
+with open("myotherfile") as file:
+   print(file.read())
+   print(file.read()) # On a déjà consommé le flux
+````
+
+````
+"Hello\nMy Name is Guillaume\nNice to meet you"
+````
+
+
+````python3
+with open("myotherfile") as file:
+   print(file.readline()) # la premère ligne
+   print(file.readline()) # la deuxième ligne
+   print(file.readlines()) # on consomme le reste
+````
+
+````
+"Hello\n"
+"My Name is Guillaume\n"
+["Nice to meet you"]
+````
+
+---
+
+# Les fichiers
+
+## Ecrire un fichier
+
+On peut écrire un fichier et écraser son contenu avec le mode overwrite `w`:
+
+````python3
+with open("myotherfile", "w") as file:
+   file.write("I overwrite ")
+   file.write("what I want !!") # Ecrit à la suite
+   file.write("\nWhen I want !!") # Ecrit à la suite
+
+
+with open("myotherfile", "r") as file:
+   print(file.readlines())
+````
+
+````
+['I overwrite what I want !!\n', 'When I want !!']
+````
+
+---
+
+# Les fichiers
+
+## Ecrire un fichier (2)
+
+On peut écrire un fichier et compléter son contenu avec le mode append `a`:
+
+````python
+with open("myotherfile", "a") as file:
+   file.write("I append something")
+   file.write("\nWhen I want !!") # Ecrit à la suite
+
+
+with open("myotherfile", "r") as file:
+   print(file.readlines())
+````
+
+````
+['I overwrite what I want !!\n',
+'When I want !!I append something\n',
+'When I want !!']
+````
+
+---
+
+# Les fichiers
+
+## Les fichiers binaires
+
+On peut lire ou écrire un fichier en binaire en ajoutant le mode binaire `b` au modes existants:
+- `rb`
+- `wb`
+- `ab`
+...
+
+
+---
+
+
+# Les fichiers
+
+## Ouvrir un csv
+
+On peut utiliser module `csv` et la fonction `open` pour lire ou écrire du csv:
+
+````python
+import csv
+with open('eggs.csv') as file:
+    eggs = list(csv.reader(file, delimiter=','))
+        
+with open('eggs.csv', 'w') as csvfile:
+    spamwriter = csv.writer(csvfile, delimiter=',')
+    spamwriter.writerow(['Spam', 'Baked Beans'])
+    spamwriter.writerow(['Spam', 'Wonderful Spam'])
+````
+
+---
+
+
+# Les fichiers
+
+## Ouvrir un json
+
+On peut utiliser module `json` et la fonction `open` pour lire ou écrire du csv:
+
+````python
+import json
+with open('students.json') as file:
+    students = json.load(file)
+    
+students_scores = {"jean michel": 19.5,
+                   "jean gilles": 10.5}
+with open('students_scores.json', 'w') as file:
+    json.dump(students_scores, file)
+````
+
+---
+
+# Structure d'un projet
+
+## Les conditions d'un bon projet
+
+Un projet python (lib ou app) doit avoir:
+- Un `README` (**md** or rst) pour expliquer le projet
+- Un système de versionnement (**git** ou mercurial ou svn)
+- Un `CHANGELOG` (**md** ou rst) pour expliquer les changements
+- Un point d'entrée (un fichier .py ou un raccourci système)
+- Un code source avec une arborescence clair
+- Un fichier contenant les versions des modules externes
+- **Idéalement** des tests unitaires
+- **Idéalement** une configuration de linter
+
+---
+
+# Structure d'un projet
+
+## Structure basique
+
+Observons un exemple d'application python basique.
+
+Rendez vous sur https://git.io/vbY68 dans `projects/simple-project.`
+
+`README.md` contient la documentation pour installer et lancer le project.
+`CHANGELOG.md` contient les différentes versions et modifications.
+`simple_project.py` contient le point d'entrée du projet.
+`src` contient le code source utilisé par le point d'entrée.
+`requirements.txt` contient la liste des dépendances externes utilisées (et leurs versions).
