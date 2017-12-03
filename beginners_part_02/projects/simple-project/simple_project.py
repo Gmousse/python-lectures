@@ -24,3 +24,5 @@ def main():
 # It's false if we import the code in another script.
 if __name__ == "__main__":
     main()
+
+# We can remove this condition if we have a file __main__.py

@@ -15,6 +15,8 @@
 
 1. Les erreurs
 2. Les modules et les namespaces
+3. Les fichiers
+4. Structure d'un projet
 
 ---
 
@@ -160,13 +162,13 @@ if value < 0:
 
 # Les modules et les namespaces
 
-## Les fonctions built-in
+## Les built-ins
 
-De nombreuses fonctions ou types sont disponibles par défaut dans le namespace global de python, ce sont les **built-in functions**.
+De nombreuses fonctions ou types sont disponibles par défaut dans le namespace global de python, ce sont les **built-in**.
 
 Par exemple, la fonction `print` est une fonction built-in.
 
-La liste non exhaustive des built-in functions est disponible ici: https://docs.python.org/3/library/index.html
+La liste non exhaustive des built-ins est disponible ici: https://docs.python.org/3/library/index.html
 
 ---
 
@@ -176,7 +178,7 @@ La liste non exhaustive des built-in functions est disponible ici: https://docs.
 
 Parfois on veut utiliser du code prêt à l'emploi autre que les built-ins. Ce sont les modules (1 module ~= 1 fichier python).
 
-On peut ainsi importer différents modules dans son programme pour ajouter des fonctionnalités.
+On peut importer différents modules dans son programme pour ajouter des fonctionnalités.
 
 Certains modules sont préinstallés avec python: https://docs.python.org/3/py-modindex.html
 
@@ -257,7 +259,7 @@ On peut alors créer une arborescence de fichier `.py` contenant chacun une peti
 ## Appartée - pip
 
 [`pip`](https://pip.pypa.io/en/stable/) est un gestionnaire de paquets ultra complet pour python. Il permet d'installer et de gérer des modules / librairies externes pour python (dépôt `pypa`). 
-Ainsi sur votre système vous pouvez par exemple installer le module `requests`:
+Sur votre système vous pouvez par exemple installer le module `requests`:
 ````
 pip3 install requests
 pip3 install requests==2.18.4
@@ -350,13 +352,11 @@ Ce qui rend l'accés à une variable ou à une fonction possible:
 [..., 'pi']
 ````
 
-Si on est à la racine du programme, elle est aussi ajouté dans le global.
-
 ---
 
 ## La portée d'une variable
 
-En raison de l'existende de namespaces locals ou global, on dit qu'une variable a une portée (scope):
+En raison de l'existende de namespaces locaux ou global, on dit qu'une variable a une portée (scope):
 - globale si la variable est atteignable de partout (scope global)
 - locale si la variable est atteignable dans une partie du programme uniquement (scope local).
 
@@ -375,13 +375,19 @@ On est à ici à la racine du programme, ce qu'on déclare est global.
 
 ## La portée d'une variable (2)
 
-Une fonction a son propre namespace (local). Depuis l'intérieur d'une fonction, on peut accéder au namespace global. En revanche, une variable déclarée dans la fonction n'est accessible que dans celle ci (dans son namespace local):
+Une fonction a son propre namespace local. 
+Depuis l'intérieur d'une fonction, on peut accéder au namespace global. 
+En revanche, une variable déclarée dans la fonction n'est accessible que dans celle ci. 
+La variable a une portée locale et n'est présente que dans le namespace local de cette fonction
+
+---
+
 ````python
 one = 1 # one est global
 
 print(globals(), locals())
 
-def addOne(number):
+def addOne(number): # Fonction closure !
     result = one + number
     print(globals(), locals())
     return result
@@ -391,7 +397,36 @@ print(addOne(4))
 print(globals(), locals())
 ````
 
+````
+{..., 'one': 1} {..., 'one': 1}
+{..., 'one': 1, 'addOne': <function addOne>} 
+   {'result': 5, 'number': 4}
+5
+{..., 'one': 1, 'addOne': <function addOne>} 
+   {..., 'one': 1, 'addOne': <function addOne>} 
+````
+
 ---
+
+
+Quand on déclare une fonction dans une fonction, on ajoute le contenu du namespace local de la fonction "parente" à celui de la fonction "enfant" (et pas l'inverse):
+````python
+def addOneToNumbers(*numbers):
+    one = 1
+    def addOne(number): # Fonction closure !
+        return one + number
+    results = []
+    for number in numbers:
+        results.append(addOne(number))
+    return results
+
+````
+
+`addOne` a accés aux variables du scope global mais aussi à celles déclarées dans `addOneToNumbers` (qui se retrouvent dans son namespace local).
+
+---
+
+
 
 # Les fichiers
 
@@ -623,12 +658,24 @@ Un projet python (lib ou app) doit avoir:
 
 ## Structure basique
 
-Observons un exemple d'application python basique.
-
-Rendez vous sur https://git.io/vbY68 dans `projects/simple-project.`
+Rendez vous sur https://git.io/vbY68 dans `projects/simple-project` pour voir un exemple de projet basique.
 
 `README.md` contient la documentation pour installer et lancer le project.
 `CHANGELOG.md` contient les différentes versions et modifications.
 `simple_project.py` contient le point d'entrée du projet.
-`src` contient le code source utilisé par le point d'entrée.
+`src` contient le code source utilisé par le point d'entrée. Le fichier `__init__.py` permet à python d'importer le contenu du dossier comme des modules.
 `requirements.txt` contient la liste des dépendances externes utilisées (et leurs versions).
+
+---
+
+# Structure d'un projet
+
+## Structure avancée
+
+On peut créer une structure de projet plus élaborée qui permet d'installer son applicatif via `pip` (et le publier sur le dépôt `pypa`) voir d'y ajouter des test unitaires et un linter (via `tox`).
+
+Un bon exemple est le projet fourni par `pypa` et disponible ici: https://github.com/pypa/sampleproject.
+
+Il peut servir de base à tout projet python (application ou librairie).
+
+Il regroupe toutes les bonnes pratiques.
