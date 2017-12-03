@@ -14,9 +14,10 @@
 # Plan
 
 1. Les erreurs
-2. Les modules et les namespaces
-3. Les fichiers
-4. Structure d'un projet
+2. Les modules
+3. Les namespaces
+4. Les fichiers
+5. Structure d'un projet
 
 ---
 
@@ -160,7 +161,7 @@ if value < 0:
 ---
 
 
-# Les modules et les namespaces
+# Les modules
 
 ## Les built-ins
 
@@ -172,7 +173,7 @@ La liste non exhaustive des built-ins est disponible ici: https://docs.python.or
 
 ---
 
-# Les modules et les namespaces
+# Les modules
 
 ## Les modules
 
@@ -184,7 +185,7 @@ Certains modules sont préinstallés avec python: https://docs.python.org/3/py-m
 
 ---
 
-# Les modules et les namespaces
+# Les modules
 
 ## Importer un module
 
@@ -210,7 +211,7 @@ print(pi)
 
 ---
 
-# Les modules et les namespaces
+# Les modules
 
 ## Importer un module (2)
 
@@ -244,7 +245,6 @@ On peut alors créer une arborescence de fichier `.py` contenant chacun une peti
 
 ## Les modules internes indispensables (2)
 
-- **EXTERNE** [`requests`](http://docs.python-requests.org/en/master/): requêtes HTTP (intéractions avec apis web...)
 - [`argparse`](`https://docs.python.org/3/library/argparse.html`): gestionnaire de paramètres de script
 - [`threading`](https://docs.python.org/3/library/threading.html), [`multiprocessing`](https://docs.python.org/3/library/multiprocessing.html): parallélisation de calculs
 - [`itertools`](https://docs.python.org/3/library/itertools.html), [`functools`](https://docs.python.org/3/library/functools.html): programmation fonctionnelle
@@ -287,27 +287,29 @@ pip3 uninstall requests
 ---
 
 
-# Les modules et les namespaces
+# Les namespaces
 
-## Comprendre les namespaces
+## Qu'est ce qu'un namespace
 
-Quand une fonction, une variable, ou un module est utilisable dans python, elle est présente dans le *namespace* (ou *scope*) courant.
+En python, chaque variable, fonctions ou modules utilisables sont enregistrées dans un registre de noms: un *namespace*.
 
-On a deux types de namespaces:
-- global (son contenu est accessible partout)
-- local (son contenu est accessible dans une partie du code)
+Ainsi, quand une fonction, une variable, ou un module est utilisable dans python, elle est présente dans le *namespace* (ou *scope*) courant.
 
-Les built-ins par exemple sont présents par défaut dans le namespace global.
+Exemple de *namespace*: `['__annotations__', '__builtins__', '__doc__', '__loader__', '__name__', '__package__', '__spec__', 'math', 'students']`
+
+Les built-ins par exemple sont présents par défaut dans le namespace global de python.
 
 ---
 
-# Les modules et les namespaces
+# Les namespaces
 
-## Comprendre les namespaces (2)
+## Namespace global et namespaces locaux
 
+On a deux types de namespaces:
+- global (son contenu est accessible partout)
+- local (son contenu diffère suivant la position dans le code)
 
-Pour visualiser un namespace, on utilise les fonctions `globals` ou `locals` (ou `dir`) qui liste tout ce qui est dans le namespace global et local:
-
+On utilise les fonctions `globals` ou `locals` (ou `dir`) qui liste tout ce qui est dans le namespace global et local:
 ````python
 print(globals())
 print(locals()) # ou dir()
@@ -315,36 +317,19 @@ print(locals()) # ou dir()
 
 `['__annotations__', '__builtins__', '__doc__', '__loader__', '__name__', '__package__', '__spec__']`
 
-Ainsi on voit que nos built-ins sont en effet présent dans le programme.
-
-On peut même en voir le contenu: `print(dir(__builtins__))`
 
 ---
 
-# Les modules et les namespaces
+# Les namespaces
 
-## Comprendre les namespaces (3)
-
-Si on essaye d'atteindre une variable qui n'est pas présent ni dans le namespace local, ni dans le global, on dit qu'elle n'est pas à portée (pas dans le scope):
-
-````python
-print(pi)
-````
-
-Python nous signal que le nom `pi` n'est pas présent dans le namespace: `NameError: name 'pi' is not defined`.
-
----
-
-# Les modules et les namespaces
-
-## Comprendre les namespaces (4)
+## Namespace global et namespaces locaux (2)
 
 Lorsque l'on importe un module, ou que l'on déclare une variable, python l'ajoute alors au namespace courant (local):
 
 ````python
 from math import pi
 print(pi)
-print(locals())
+print(locals()) # Ici idem que print(globals())
 ````
 Ce qui rend l'accés à une variable ou à une fonction possible:
 ````
@@ -352,49 +337,60 @@ Ce qui rend l'accés à une variable ou à une fonction possible:
 [..., 'pi']
 ````
 
+Si on est à la racine du code, la variable ou module est aussi dans le namespace global.
+
+------
+
+
+# Les namespaces
+
+## Namespace global et namespaces locaux (3)
+
+Si on essaye d'atteindre une variable qui n'est pas présent ni dans le namespace local, ni dans le global (pas dans le scope):
+
+````python
+print(pi)
+````
+
+Python nous signal que le nom `pi` n'est pas présent dans le namespace: 
+````
+NameError: name 'pi' is not defined
+````
+
+La variable n'est alors soit pas déclarée, soit on dit qu'elle n'est pas à portée (pas dans le namespace courant).
+
 ---
+
+# Les namespaces
 
 ## La portée d'une variable
 
-En raison de l'existende de namespaces locaux ou global, on dit qu'une variable a une portée (scope):
-- globale si la variable est atteignable de partout (scope global)
-- locale si la variable est atteignable dans une partie du programme uniquement (scope local).
-
-Exemple avec `globals` et `locals`:
-
-````python
-a = 1
-print(globals(), locals())
-````
-````
-{..., 'a': 1} {..., 'a': 1}
-````
-On est à ici à la racine du programme, ce qu'on déclare est global.
-
----
-
-## La portée d'une variable (2)
-
 Une fonction a son propre namespace local. 
 Depuis l'intérieur d'une fonction, on peut accéder au namespace global. 
-En revanche, une variable déclarée dans la fonction n'est accessible que dans celle ci. 
-La variable a une portée locale et n'est présente que dans le namespace local de cette fonction
+Une variable déclarée dans la fonction n'est accessible que dans celle ci. 
+On dit que **la variable a une portée locale** et n'est présente que dans le namespace local (ou scope) de cette fonction.
+
+Une variable peut donc avoir 2 portées différentes:
+- globale si elle est atteignable de partout.
+- locale si elle est dans une partie du programme uniquement.
+
 
 ---
 
 ````python
-one = 1 # one est global
+one = 1 # variable globale
 
 print(globals(), locals())
 
-def addOne(number): # Fonction closure !
-    result = one + number
+def addOne(number):
+    result = one + number # bariable locale de addOne
     print(globals(), locals())
     return result
 
 
 print(addOne(4))
 print(globals(), locals())
+print(result) # result n'est pas à portée !
 ````
 
 ````
@@ -404,10 +400,10 @@ print(globals(), locals())
 5
 {..., 'one': 1, 'addOne': <function addOne>} 
    {..., 'one': 1, 'addOne': <function addOne>} 
+NameError: name 'result' is not defined
 ````
 
 ---
-
 
 Quand on déclare une fonction dans une fonction, on ajoute le contenu du namespace local de la fonction "parente" à celui de la fonction "enfant" (et pas l'inverse):
 ````python
@@ -426,6 +422,112 @@ def addOneToNumbers(*numbers):
 
 ---
 
+
+## Modifier une variable globale
+
+Implicitement, on ne peut pas modifier une variable globale dans une fonction:
+
+````python
+number = 24
+
+def setNumberToOne():
+   number = 1 # Celà ne réassigne pas la globale
+   print("In the function:", number)
+
+setNumberToOne() # NOPE
+print("Outside the function:", number)
+````
+
+````
+In the function: 1
+Outside the function 24
+````
+
+En effet, si on essaye d'assigner une variable dans une fonction, python part du principe que c'est une nouvelle variable locale.
+
+---
+
+## Modifier une variable globale (2)
+
+Si on veut par exemple incrémenter une variable:
+````python
+number = 24
+
+def addOneToNumber():
+   number += 1
+
+addOneToNumber()
+````
+
+Python nous fait bien comprendre qu'il ne compte pas utiliser la globale:
+````
+UnboundLocalError: local variable 'number' referenced before assignment
+````
+---
+
+## Modifier une variable globale (3)
+
+On peut quand même le faire en utilisant le mot clef `global`:
+````python
+number = 24
+
+def addOneToNumber():
+   global number # On utilise la globale number
+   number += 1
+
+
+addOneToNumber() # MAGIC
+print(number)
+````
+
+````
+25
+````
+
+#### MAIS NE LE FAITES PAS !!!
+
+---
+
+
+## Modifier une variable globale (4)
+
+Modifier une variable globale comme ceci peut être dangereux:
+````python
+rabbit = "rabbit"
+
+a_function()
+another_function()
+
+print(rabbit) # MAGIC
+````
+
+On peut se retrouver avec des résultats non attendus et compliqués à retracer:
+````
+"GORILLA" # WHAAAAAAAAAAAT
+````
+
+---
+
+
+## Modifier une variable globale (5)
+
+Préférez expliciter une réassignation (ou même changer le nom de variable). N'utilisez pas `global` et utilisez un `return`:
+````python
+number = 24
+
+def addOne(num):
+    return num + 1
+
+number = addOne(number)
+print(number)
+````
+
+On comprend mieux comment on arrive à un résultat donné:
+````
+25
+````
+
+---
 
 
 # Les fichiers
