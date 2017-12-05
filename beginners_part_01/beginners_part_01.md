@@ -61,8 +61,6 @@ Langages: Python, JavaScript, Scala, R
 6. Les structures de données
 7. Les boucles
 8. Les fonctions
-9. Les erreurs
-10. Les modules et les namespaces
 
 ---
 
@@ -607,6 +605,24 @@ print(float(128), int(3.14))
 
 PS: Il existe aussi un type `complex` que nous n'aborderons pas.
 PS2: Il existait en python2 un type `long` qui a été unifié avec `int`.
+
+---
+
+## Appartée - La fonction round
+
+On doit parfois arrondir un nombre à virgule, on utilise alors la fonction `round`:
+````python
+pi = 3.141592653589793
+round(pi) # Arrondi à l'entier le plus proche
+round(pi, 2) # Arrond à la deuxième décimale
+round(pi, 4) # Arrond à la quatrième décimale
+````
+
+````python
+3
+3.14
+3.1416
+````
 
 ---
 
@@ -1205,25 +1221,6 @@ print(liste_nombres, deuxieme_nombre)
 
 # Les structures de données
 
-## La liste - Suppression (2)
-
-On peut aussi prélever des éléments dans une liste:
-````python
-nombres = [1, 2, 3, 4, 5, 6, 7]
-dernier_nombre = nombres.pop() # on prélève le dernier
-print(liste_nombres, dernier_nombre)
-deuxieme_nombre = nombres.pop(1) # on prélève le deuxieme
-print(liste_nombres, deuxieme_nombre)
-````
-````
-[1, 2, 3, 4, 5, 6]  7
-[1, 3, 4, 5, 6]  2
-````
-
----
-
-# Les structures de données
-
 ## La liste - Modifier l'ordre
 
 On peut aussi modifier l'ordre des élements:
@@ -1274,6 +1271,26 @@ Temps estimé: 10 minutes
 
 ---
 
+## Appartée - Les fonctions mathématiques pour itérables
+
+On peut opérer certaines fonctions mathématiques sur une `list` (et autres itérables):
+````python
+liste_nombres = [8, 2, 4, 3, 0, -4]
+max(liste_nombres) # Retourne la valeur max
+min(liste_nombres) # Retourne la valeur min
+sum(liste_nombres) # Retourne la somme des valeurs
+
+````
+
+````python
+8
+-4
+13
+````
+
+---
+
+
 # Les structures de données
 
 ## Le dictionnaire
@@ -1297,6 +1314,52 @@ students_notes = dict([
 ````
 
 ---
+
+## Appartée - La fonction zip
+
+Parfois on a besoin de construire un `dict` à partir de 2 listes (une avec les clefs, une avec les valeurs). On peut utiliser la fonction `zip` pour combiner les 2 listes:
+
+````python
+cars_prices = [18950, 27800, 18912]
+cars_names = ["c4", "crz", "yaris"]
+cars = list(zip(cars_names, cars_prices))
+print(cars)
+print(dict(cars))
+````
+
+````
+[('c4', 18950), ('crz', 27800), ('yaris', 18912)]
+{'c4': 18950, 'crz': 27800, 'yaris': 18912}
+````
+
+
+---
+
+## Appartée - La fonction str.join
+
+On avait vu que l'on pouvait splitter un str en liste via la méthode `str.split`:
+````python3
+text = "It's a text, that I want to split, maybe, maybe not..."
+test_splitted = text.split(",") # split sur ,
+print(test_splitted)
+````
+````
+["It's a text", " that I want to split", " maybe", " maybe not..."]
+````
+On peut aussi faire l'inverse avec `str.join`:
+
+````python
+new_text = ";".join(test_splitted) # join sur ;
+print(new_text)
+````
+
+````
+"It's a text; that I want to split; maybe; maybe not..."
+````
+
+
+---
+
 
 # Les structures de données
 
@@ -1463,11 +1526,24 @@ Toutes les méthodes de `list` sont donc utilisables sur un `dict`!!
 
 ---
 
+
+###### Exercice 06: Les dictionnaires
+
+Instructions:
+- Rendez vous sur github: https://git.io/vFj7w
+- Récupérez le fichier dicts_test.py
+- Ouvrez le dans un éditeur de texte et lisez les consignes.
+
+Temps estimé: 5 minutes
+
+---
+
+
 # Les structures de données
 
 ## Le tuple
 
-Le [`tuple`](https://docs.python.org/3/tutorial/datastructures.html#tuples-and-sequences) est une liste une `list` immutable.
+Le [`tuple`](https://docs.python.org/3/tutorial/datastructures.html#tuples-and-sequences) est une `list` immutable.
 
 Il est identique à la `list` à 4 détails prês:
 - On ne peut pas y ajouter des élements
@@ -1530,14 +1606,14 @@ tuple_nombres[-1]
 tuple_nombres[0:3]
 ````
 
-La concaténation (non mutable) est idenEtique:
+La concaténation (non mutable) est identique:
 ````python3
 tuple_nombres += (7, 8)
 ````
 
 Le tuple supporte aussi les méthodes de recherches: `.count`, `.index`, `.find`, ...
 
-On peut d'ailleurs le typer le liste: `list(tuple_nombres)`
+On peut d'ailleurs le typer en liste: `list(tuple_nombres)`
 
 ---
 
@@ -1996,6 +2072,46 @@ Current date: 2017-11-29 00:01:22.349768
 
 ---
 
+## Appartée - Compréhension de liste et dict
+
+
+Il est possible de créer une liste en itérant via une compréhension de liste (expression):
+````python
+old_list = [None, 1, 2, 3, 4, None, 5, 6, 7]
+new_list = [x * 2 for x in old_list if x is not None]
+print(new_list)
+````
+
+````
+[2, 4, 6, 8, 10, 12, 14]
+````
+
+Idem avec le dictionnaire:
+````python
+new_dict = {"key_{}".format(key): value\
+            for key, value in enumerate(new_list)}
+print(new_dict)
+````
+
+````
+{'key_0': 2, 'key_1': 4, 'key_2': 6, 'key_3': 8, 'key_4': 10, 'key_5': 12, 'key_6': 14}
+````
+
+---
+
+
+###### Exercice 07: Les boucles
+
+Instructions:
+- Rendez vous sur github: https://git.io/vFj7w
+- Récupérez le fichier iterations_test.py
+- Ouvrez le dans un éditeur de texte et lisez les consignes.
+
+Temps estimé: 10 minutes
+
+---
+
+
 # Les fonctions
 
 ## La fonction
@@ -2015,6 +2131,19 @@ print(12) # Est appellée avec le paramètre 12
 <built-in function print>
 12
 ````
+
+---
+
+
+# Les modules
+
+## Les built-ins
+
+De nombreuses fonctions ou types sont disponibles par défaut dans python, ce sont les **built-in**.
+
+Par exemple, la fonction `print` est une fonction built-in.
+
+La liste non exhaustive des built-ins est disponible ici: https://docs.python.org/3/library/index.html
 
 ---
 
@@ -2165,7 +2294,7 @@ print(good_sum(4, 5))
 
 On peut se servir du return pour éviter un `else` inutile:
 ````python3
-def bad_car_price(car_color):
+def bad_car_price(car_color):	
     if car_color == "yellow":
        return 8000
     else:  # Else inutile
@@ -2255,293 +2384,16 @@ print(
 
 ---
 
-# Les erreurs
 
-## Les types d'erreurs / exceptions
+###### Exercice 08: Les fonctions
 
-Python est très expressif et n'hésite pas à lever des erreurs:
-````
-SyntaxError # Erreur de parsing
-IndentationError # Mauvaise indentation
-NameError # Variable non définie
-TypeError # Erreur de typage
-IndexError # Index inexistant
-KeyError # Clef inexistante .....
-````
+Instructions:
+- Rendez vous sur github: https://git.io/vFj7w
+- Récupérez votre code réaliser dans iterations_test.py
+- Refactorez au maximum (créez au moins 3 fonctions)!!!!
+- Appellez moi.
 
-Python en a beaucoup déjà définies, ce sont les built-in exceptions: https://docs.python.org/3/library/exceptions.html
+Temps estimé: 5 minutes
 
 ---
 
-# Les erreurs
-
-## Les types d'erreurs / exceptions (2)
-
-
-Tout ces types d'erreurs ont un type commun: `Exception`. On dit que ces erreurs héritent de la classe ou du type `Exception`. (cf partie 2).
-
-Il est également possible d'en créer de nouvelles, mais également des dérivés (cf partie 2).
-
-Ainsi les modules et les librairies (modules externes) amènent leurs lots de nouveaux types d'erreurs.
-
----
-
-# Les erreurs
-
-## Gérer les erreurs
-
-Lorsqu'une erreur est levée, elle met fin à l'éxecution du programme. Il faut les gérer pour garantir la continuité de notre programme.
-
-On utilise alors les déclarations `try` et `except` pour les gérer.
-
-Le `try` entoure du code à risque (susceptible de lever une exception).
-Si il y a une erreur (attendue), `except` va éxecuter du code qui lui a été fourni. Le programme continue.
-
----
-
-# Les erreurs
-
-## Gérer les erreurs (2)
-
-Programme sans try / except:
-````python
-dict_students = {"John": 18.65, "Jacques": 10.00}
-print(dict_students["Martine"])
-# KeyError; Le programme s'arrête.
-# Le code dessous ne s'exécute pas.
-print(dict_students["John"])
-````
-
-Programme avec try / except gérant les KeyError:
-````python
-try:
-    dict_students = {"John": 18.65, "Jacques": 10.00}
-    print(dict_students["Martine"])
-except KeyError:
-    # Le programme continue.
-    print(dict_students["John"])
-````
-
----
-
-## Gérer les erreurs (3)
-
-
-On peut chaîner les `except` pour gérer différents types d'erreurs:
-````python
-students_name = ["John", "Gilles", "Jacques", "Jean Charles"]
-students_notes = {"John": 18.65, "Jacques": 10.00, "Gilles": None}
-for student in students_name:
-    try:
-        students_notes[student] += 1.00
-    except TypeError:
-        print(student, "'s score is wrong!")
-        del students_notes[student]
-    except KeyError:
-        print(student, " doesn't have score!")
-
-print(students_notes)
-````
-
-````
-Gilles 's note is wrong!
-Jean Charles  doesn't have score!
-{'John': 19.65, 'Jacques': 11.0}
-````
-
----
-
-
-## Gérer les erreurs (4)
-
-
-**\/!\\** Evitez d'utiliser le type Exception:
-````python
-for student in students_name:
-    try:
-        students_notes[student] += 1.00
-    except Exception: # Chaque erreur est une exception
-         print("Il y a eu une erreur !!")
-    except TypeError: # On ne passe plus ici
-        print(student, "'s score is wrong!")
-        del students_notes[student]
-    except KeyError:  # On ne passe plus ici
-        print(student, " doesn't have score!")
-
-print(students_notes)
-````
-
-````
-Il y a eu une erreur !!
-Il y a eu une erreur !!
-{'John': 19.65, 'Jacques': 11.0}
-````
-
----
-
-# Les erreurs
-
-## Lever une erreur
-
-Lorsque l'on écrit un programme, il peut être intéressant de lever des erreurs pour communiquer avec l'utilisateur (développeur ou autres).
-
-On peut utiliser `raise` pour lever une erreur:
-````python
-if value < 0:
-   # on choisit de lever une erreur avec un message personnalisé.
-   raise ValueError("The value can't be negative!")
-````
-
----
-
-
-# Les modules et les namespaces
-
-## Les fonctions built-in
-
-De nombreuses fonctions ou types sont disponibles par défaut dans le namespace (ou scope) de python, ce sont les **built-in functions**.
-
-Par exemple, la fonction `print` est une fonction built-in.
-
-La liste non exhaustive des built-in functions est disponible ici: https://docs.python.org/3/library/functions.html
-
----
-
-# Les modules et les namespaces
-
-## Les modules
-
-Parfois on veut utiliser du code prêt à l'emploi autre que les built-ins. Ce sont les modules (1 module ~= 1 fichier python).
-
-On peut ainsi importer différents modules dans son programme pour ajouter des fonctionnalités.
-
-Certains modules sont préinstallés avec python: https://docs.python.org/3/py-modindex.html
-
----
-
-# Les modules et les namespaces
-
-## Importer un module
-
-On peut importer un module dans son intégralité:
-````python
-import math
-print(math.pi)
-````
-
-Ou importer quelques parties du module:
-
-````python
-from math import pi
-print(pi)
-````
-
-Ou même tout importer d'un module:  **\/!\\**
-
-````python
-from math import *
-print(pi)
-````
-
----
-
-# Les modules et les namespaces
-
-## Importer un module (2)
-
-On peut aussi utiliser le système de modules pour découper son programme en plusieurs fichiers:
-
-````python
-from .my_folder.my_file import my_function
-````
-
-On peut alors créer une arborescence de fichier `.py` contenant chacun une petite partie du code, que l'on importera au besoin.
-
-
----
-
-
-# Les modules et les namespaces
-
-## Comprendre les namespaces
-
-Quand une fonction, une variable, ou un module est utilisable dans python, on dit qu'elle est présente dans le namespace (ou scope).
-
-Les built-ins par exemple sont présents par défaut.
-
-Pourcomprendre on utilise la fonction `dir` qui liste tout ce qui est dans le namespace:
-
-````
-print(dir())
-````
-
-`['__annotations__', '__builtins__', '__doc__', '__loader__', '__name__', '__package__', '__spec__']`
-
-
----
-
-
-# Les modules et les namespaces
-
-## Comprendre les namespaces
-
-Quand une fonction, une variable, ou un module est utilisable dans python, on dit qu'elle est présente dans le namespace (ou scope).
-
-Les namespaces sont (~) une liste de noms de ce qui est accessible à un endroit donné du programme.
-
-Les built-ins par exemple sont présents par défaut dans le namespace.
-
----
-
-
-# Les modules et les namespaces
-
-## Comprendre les namespaces (2)
-
-
-Pour visualiser un namespace, on utilise la fonction `dir` qui liste tout ce qui est dans le namespace local:
-
-````python
-print(dir())
-````
-
-`['__annotations__', '__builtins__', '__doc__', '__loader__', '__name__', '__package__', '__spec__']`
-
-Ainsi on voit que nos built-ins sont en effet présent dans le programme.
-
-On peut même en voir le contenu: `print(dir(__builtins__))`
-
----
-
-# Les modules et les namespaces
-
-## Comprendre les namespaces (3)
-
-Si on essaye d'accéder à une variable qui n'est pas présent dans le namespace local:
-
-````python
-print(pi)
-````
-
-Python nous signal que le nom `pi` n'est pas présent dans le namespace local: `NameError: name 'pi' is not defined`.
-
----
-
-# Les modules et les namespaces
-
-## Comprendre les namespaces (4)
-
-Lorsque l'on importe un module, ou que l'on déclare une variable, python l'ajoute alors au namespace:
-
-````python
-from math import pi
-print(pi)
-print(dir())
-````
-Ce qui rend l'accés à une variable ou à une fonction possible:
-````
-3.141592653589793
-[..., 'pi']
-````
-
----

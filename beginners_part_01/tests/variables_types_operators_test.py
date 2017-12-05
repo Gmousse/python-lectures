@@ -20,7 +20,7 @@ Vous pourrez résoudre chaque exercice entre ces balises.
 Ne touchez à rien d'autre que le code entre ces deux balises (ou alors vous trichez :D).
 
 A chaque exercice vous pouvez éxecuter ce fichier comme ceci:
-python3 variable_and_types.py
+python3 variable_and_types_test.py
 
 Le script vous affichera alors si vous avez bon à chaque exercice.
 
@@ -39,7 +39,7 @@ class Test_variables_types_operators(unittest.TestCase):
           - Déclarez une variable circle_diameter contenant le diamètre du cercle
             sachant que le rayon est égal à 13 (cm).
           - Déclarez une variable circle_circumference contenant la circonférence du cercle
-            celle ci étant égale à 82 (cm).
+            celle ci étant égale à 81.6814 (cm).
           - Calculez pi et enregistrez le résultat dans une variable pi.
           - (OPTIONAL) Essayez de deviner le type de la variable pi. Affichez son type dans la console.
         """
@@ -51,7 +51,7 @@ class Test_variables_types_operators(unittest.TestCase):
 
         self.assertTrue(isinstance(circle_diameter, int))
         self.assertTrue(isinstance(circle_circumference, int))
-        self.assertTrue(round(pi, 4) == 3.1538)
+        self.assertTrue(round(pi, 4) == 3.1415)
 
     def test_pretty_email(self):
         """
