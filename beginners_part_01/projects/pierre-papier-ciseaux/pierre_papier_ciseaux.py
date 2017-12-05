@@ -3,11 +3,6 @@
 import argparse
 from random import random
 
-parser = argparse.ArgumentParser(description='Jeu de pierre papier ciseaux.')
-parser.add_argument('--manches', type=int, default=15,
-                    help='Nombre de manches. 15 par défaut.')
-args = parser.parse_args()
-
 
 def main(manches):
     manches_jouees = 0
@@ -22,4 +17,8 @@ def main(manches):
 
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description='Jeu de pierre papier ciseaux.')
+    parser.add_argument('--manches', type=int, default=15,
+                        help='Nombre de manches. 15 par défaut.')
+    args = parser.parse_args()
     main(args.manches)

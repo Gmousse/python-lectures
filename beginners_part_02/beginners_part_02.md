@@ -18,7 +18,8 @@
 3. Les namespaces
 4. Les fichiers
 5. Structure d'un projet
-
+6. (Post-projet) Les classes
+7. (Post-projet) Fonctions de haut niveau
 ---
 
 # Les erreurs
@@ -160,19 +161,6 @@ if value < 0:
 
 ---
 
-
-# Les modules
-
-## Les built-ins
-
-De nombreuses fonctions ou types sont disponibles par défaut dans le namespace global de python, ce sont les **built-in**.
-
-Par exemple, la fonction `print` est une fonction built-in.
-
-La liste non exhaustive des built-ins est disponible ici: https://docs.python.org/3/library/index.html
-
----
-
 # Les modules
 
 ## Les modules
@@ -216,7 +204,7 @@ print(pi)
 ## Importer un module (2)
 
 
-On peut aussi utiliser le système de modules pour découper son programme en plusieurs fichiers:
+On peut aussi utiliser le système d'import pour découper son programme en plusieurs fichiers:
 
 ````python
 from .my_folder.my_file import my_function
@@ -293,7 +281,7 @@ pip3 uninstall requests
 
 En python, chaque variable, fonctions ou modules utilisables sont enregistrées dans un registre de noms: un *namespace*.
 
-Ainsi, quand une fonction, une variable, ou un module est utilisable dans python, elle est présente dans le *namespace* (ou *scope*) courant.
+Ainsi, quand une fonction, une variable, ou un module est utilisable dans python, elle est présente dans le *namespace* courant.
 
 Exemple de *namespace*: `['__annotations__', '__builtins__', '__doc__', '__loader__', '__name__', '__package__', '__spec__', 'math', 'students']`
 
@@ -344,20 +332,15 @@ Si on est à la racine du code, la variable ou module est aussi dans le namespac
 
 # Les namespaces
 
-## Namespace global et namespaces locaux (3)
+## Namespaces et fonctions
 
-Si on essaye d'atteindre une variable qui n'est pas présent ni dans le namespace local, ni dans le global (pas dans le scope):
+Une fonction (ou une classe ou tout autre partie ou *block* de code) a son propre namespace local.
+Depuis l'intérieur d'une fonction, on peut accéder au namespace global. 
+Quand on déclare une variable dans une fonction, elle est ajoutée au namespace local de cette dernière.
 
-````python
-print(pi)
-````
+Une variable déclarée dans la fonction n'est accessible que dans celle ci. 
 
-Python nous signal que le nom `pi` n'est pas présent dans le namespace: 
-````
-NameError: name 'pi' is not defined
-````
-
-La variable n'est alors soit pas déclarée, soit on dit qu'elle n'est pas à portée (pas dans le namespace courant).
+On dit alors qu'elle a une portée (scope) locale.
 
 ---
 
@@ -365,15 +348,33 @@ La variable n'est alors soit pas déclarée, soit on dit qu'elle n'est pas à po
 
 ## La portée d'une variable
 
-Une fonction a son propre namespace local. 
-Depuis l'intérieur d'une fonction, on peut accéder au namespace global. 
+On définit la portée (scope) d'une variable comme ceci: toute variable définie dans un *block* (et présent dans son namespace) a comme *portée* ce *block* et tout ce qu'il contient. 
+
+Tant que la variable est à portée, elle est accessible.
+
 Une variable déclarée dans la fonction n'est accessible que dans celle ci. 
-On dit que **la variable a une portée locale** et n'est présente que dans le namespace local (ou scope) de cette fonction.
 
 Une variable peut donc avoir 2 portées différentes:
 - globale si elle est atteignable de partout.
-- locale si elle est dans une partie du programme uniquement.
+- locale si elle est atteignable dans une partie (*block*) du programme uniquement.
 
+
+---
+
+# Les namespaces
+
+## La portée d'une variable (2)
+
+Si on essaye d'atteindre une variable qui n'est pas présent ni dans le namespace local courant, ni dans le global:
+
+````python
+print(pi)
+````
+
+Elle n'est donc pas à portée (ou alors non définie...):
+````
+NameError: name 'pi' is not defined
+````
 
 ---
 
@@ -382,13 +383,13 @@ one = 1 # variable globale
 
 print(globals(), locals())
 
-def addOne(number):
+def add_one(number):
     result = one + number # bariable locale de addOne
     print(globals(), locals())
     return result
 
 
-print(addOne(4))
+print(add_one(4))
 print(globals(), locals())
 print(result) # result n'est pas à portée !
 ````
@@ -405,20 +406,20 @@ NameError: name 'result' is not defined
 
 ---
 
-Quand on déclare une fonction dans une fonction, on ajoute le contenu du namespace local de la fonction "parente" à celui de la fonction "enfant" (et pas l'inverse):
+Quand on déclare une fonction dans une fonction, la portée des variables déclarée dans la fonction parente s'étend à l'enfant:
 ````python
-def addOneToNumbers(*numbers):
+def add_one_to_numbers(*numbers):
     one = 1
-    def addOne(number): # Fonction closure !
-        return one + number
+    def add_one(number): # Fonction closure !
+        return one + number # Accés à la variable one
     results = []
     for number in numbers:
-        results.append(addOne(number))
+        results.append(add_one(number))
     return results
 
 ````
 
-`addOne` a accés aux variables du scope global mais aussi à celles déclarées dans `addOneToNumbers` (qui se retrouvent dans son namespace local).
+`add_one` a accés aux variables du scope global mais aussi à celles déclarées dans `add_one_to_numbers` (qui se retrouvent dans son namespace local).
 
 ---
 
@@ -430,17 +431,17 @@ Implicitement, on ne peut pas modifier une variable globale dans une fonction:
 ````python
 number = 24
 
-def setNumberToOne():
-   number = 1 # Celà ne réassigne pas la globale
-   print("In the function:", number)
+def set_number_to_one():
+   number = 1 # Celà crée une variable number locale
+   print("In the function:", number) # locale
 
-setNumberToOne() # NOPE
-print("Outside the function:", number)
+set_number_to_one() # NOPE
+print("Outside the function:", number) # globale
 ````
 
 ````
-In the function: 1
-Outside the function 24
+In the function: 1   # variable number de la fonction
+Outside the function 24 # variable number globale
 ````
 
 En effet, si on essaye d'assigner une variable dans une fonction, python part du principe que c'est une nouvelle variable locale.
@@ -453,15 +454,16 @@ Si on veut par exemple incrémenter une variable:
 ````python
 number = 24
 
-def addOneToNumber():
-   number += 1
+def add_one_to_number():
+   number = number + 1 # python est perdu
 
-addOneToNumber()
+add_one_to_number()
 ````
 
 Python nous fait bien comprendre qu'il ne compte pas utiliser la globale:
 ````
-UnboundLocalError: local variable 'number' referenced before assignment
+UnboundLocalError: local variable 'number' referenced
+before assignment
 ````
 ---
 
@@ -471,12 +473,12 @@ On peut quand même le faire en utilisant le mot clef `global`:
 ````python
 number = 24
 
-def addOneToNumber():
+def add_one_to_number():
    global number # On utilise la globale number
    number += 1
 
 
-addOneToNumber() # MAGIC
+add_one_to_number() # MAGIC
 print(number)
 ````
 
@@ -515,10 +517,10 @@ Préférez expliciter une réassignation (ou même changer le nom de variable). 
 ````python
 number = 24
 
-def addOne(num):
+def add_one(num):
     return num + 1
 
-number = addOne(number)
+number = add_one(number)
 print(number)
 ````
 
@@ -781,3 +783,8 @@ Un bon exemple est le projet fourni par `pypa` et disponible ici: https://github
 Il peut servir de base à tout projet python (application ou librairie).
 
 Il regroupe toutes les bonnes pratiques.
+
+
+---
+
+# La suite après le projet...

@@ -2072,6 +2072,46 @@ Current date: 2017-11-29 00:01:22.349768
 
 ---
 
+## Appartée - Compréhension de liste et dict
+
+
+Il est possible de créer une liste en itérant via une compréhension de liste (expression):
+````python
+old_list = [None, 1, 2, 3, 4, None, 5, 6, 7]
+new_list = [x * 2 for x in old_list if x is not None]
+print(new_list)
+````
+
+````
+[2, 4, 6, 8, 10, 12, 14]
+````
+
+Idem avec le dictionnaire:
+````python
+new_dict = {"key_{}".format(key): value\
+            for key, value in enumerate(new_list)}
+print(new_dict)
+````
+
+````
+{'key_0': 2, 'key_1': 4, 'key_2': 6, 'key_3': 8, 'key_4': 10, 'key_5': 12, 'key_6': 14}
+````
+
+---
+
+
+###### Exercice 07: Les boucles
+
+Instructions:
+- Rendez vous sur github: https://git.io/vFj7w
+- Récupérez le fichier iterations_test.py
+- Ouvrez le dans un éditeur de texte et lisez les consignes.
+
+Temps estimé: 10 minutes
+
+---
+
+
 # Les fonctions
 
 ## La fonction
@@ -2091,6 +2131,19 @@ print(12) # Est appellée avec le paramètre 12
 <built-in function print>
 12
 ````
+
+---
+
+
+# Les modules
+
+## Les built-ins
+
+De nombreuses fonctions ou types sont disponibles par défaut dans python, ce sont les **built-in**.
+
+Par exemple, la fonction `print` est une fonction built-in.
+
+La liste non exhaustive des built-ins est disponible ici: https://docs.python.org/3/library/index.html
 
 ---
 
@@ -2328,3 +2381,19 @@ print(
 ````
 ['apple', 'peach'] ['tomato']
 ````
+
+---
+
+
+###### Exercice 08: Les fonctions
+
+Instructions:
+- Rendez vous sur github: https://git.io/vFj7w
+- Récupérez votre code réaliser dans iterations_test.py
+- Refactorez au maximum (créez au moins 3 fonctions)!!!!
+- Appellez moi.
+
+Temps estimé: 5 minutes
+
+---
+

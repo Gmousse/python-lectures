@@ -20,7 +20,7 @@ Vous pourrez résoudre chaque exercice entre ces balises.
 Ne touchez à rien d'autre que le code entre ces deux balises (ou alors vous trichez :D).
 
 A chaque exercice vous pouvez éxecuter ce fichier comme ceci:
-python3 variable_and_types.py
+python3 variable_and_types_test.py
 
 Le script vous affichera alors si vous avez bon à chaque exercice.
 

@@ -14,4 +14,4 @@ def getUsersToCallToday(api):
     :Example: getUsersToCallToday("https://jsonplaceholder.typicode.com/users"s)
 
     """
-    return requests.get(api).text
+    return requests.get(api).json()
